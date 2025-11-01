@@ -12,44 +12,68 @@
       height:100vh;display:flex;justify-content:center;align-items:center;
       color:white;text-align:center;overflow:hidden;
     }
-    .overlay{background-color:rgba(0,0,0,0.5);position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;}
-    .container{position:relative;z-index:1;}
-    h1{font-size:3em;color:#00ff66;text-shadow:3px 3px 0px #000;margin-bottom:10px;}
-    h2{font-size:2em;color:white;text-shadow:3px 3px 0px #000;margin-bottom:10px;}
-    p{font-size:1em;max-width:400px;margin:10px auto 30px;text-shadow:2px 2px 0px #000;}
+    .overlay {
+      background-color:rgba(0,0,0,0.5);
+      position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;
+    }
+    .container {position:relative;z-index:1;}
+    h1 {
+      font-size:3em;color:#00ff66;
+      text-shadow:3px 3px 0px #000;margin-bottom:10px;
+    }
+    h2 {
+      font-size:2em;color:white;text-shadow:3px 3px 0px #000;margin-bottom:10px;
+    }
+    p {
+      font-size:1em;max-width:400px;margin:10px auto 30px;text-shadow:2px 2px 0px #000;
+    }
     button {
       background-color:#00ff00;border:3px solid black;padding:10px 25px;
       cursor:pointer;font-size:1em;text-transform:uppercase;
       box-shadow:0 5px 0 #006400;transition:all 0.1s ease-in-out;color:black;
     }
-    button:hover{transform:translateY(2px);box-shadow:0 3px 0 #004d00;}
+    button:hover {transform:translateY(2px);box-shadow:0 3px 0 #004d00;}
+
+    /* Modal */
     .modal {
       display:none;position:fixed;top:0;left:0;width:100%;height:100%;
       background:rgba(0,0,0,0.9);justify-content:center;align-items:center;z-index:999;
     }
     .modal-content {
       background:#000;border:2px solid #00ff66;padding:30px;border-radius:10px;
-      width:90%;max-width:400px;box-shadow:0 0 20px #00ff66;color:white;text-align:center;position:relative;
+      width:90%;max-width:400px;box-shadow:0 0 20px #00ff66;
+      color:white;text-align:center;position:relative;
+      display:flex;flex-direction:column;align-items:center;
     }
-    .modal-content h3{margin-bottom:20px;color:#00ff66;}
-    .tabs{display:flex;justify-content:space-between;margin-bottom:20px;}
-    .tabs button{
+    .modal-content h3 {margin-bottom:20px;color:#00ff66;}
+    .tabs {
+      display:flex;justify-content:space-between;margin-bottom:20px;width:100%;
+    }
+    .tabs button {
       flex:1;margin:0 5px;font-size:0.9em;background-color:transparent;
       border:2px solid #00ff66;color:white;text-shadow:2px 2px 0px #000;padding:8px;
     }
-    .tabs button.active{background-color:#00ff66;color:black;}
-    .modal-content input{
-      width:100%;margin-bottom:15px;padding:10px;border:2px solid #00ff66;
-      background:black;color:white;text-align:center;font-family:'Minecraft',sans-serif;
+    .tabs button.active {background-color:#00ff66;color:black;}
+    .modal-content form {
+      display:none;flex-direction:column;width:100%;
     }
-    .close{position:absolute;top:10px;right:20px;font-size:30px;color:white;cursor:pointer;}
-    .close:hover{color:#00ff66;}
-    .submit-btn{
+    .modal-content form.active {
+      display:flex;
+    }
+    .modal-content input {
+      width:100%;margin-bottom:15px;padding:10px;border:2px solid #00ff66;
+      background:black;color:white;text-align:center;
+    }
+    .close {
+      position:absolute;top:10px;right:20px;font-size:30px;color:white;cursor:pointer;
+    }
+    .close:hover {color:#00ff66;}
+    .submit-btn {
       width:100%;background-color:#00ff00;color:black;border:3px solid #000;
       padding:10px 0;font-size:1em;box-shadow:0 5px 0 #006400;transition:0.1s ease-in-out;
     }
-    .submit-btn:hover{transform:translateY(2px);box-shadow:0 3px 0 #004d00;}
-    .message{margin-top:10px;font-size:0.9em;}
+    .submit-btn:hover {transform:translateY(2px);box-shadow:0 3px 0 #004d00;}
+    .message {margin-top:10px;font-size:0.9em;min-height:20px;}
   </style>
 </head>
 <body>
@@ -61,6 +85,7 @@
     <button id="getStartedBtn">Get Started</button>
   </div>
 
+  <!-- Modal -->
   <div class="modal" id="authModal">
     <span class="close" id="closeModal">&times;</span>
     <div class="modal-content">
@@ -70,16 +95,14 @@
         <button id="signUpTab">SIGN UP</button>
       </div>
 
-      <!-- Sign In Form -->
-      <form id="signInForm">
-        <input type="text" id="signin-username" placeholder="Username" required>
+      <form id="signInForm" class="active">
+        <input type="text" id="signin-username" placeholder="Username or Email" required>
         <input type="password" id="signin-password" placeholder="Password" required>
         <button type="submit" class="submit-btn">SIGN IN</button>
         <div class="message" id="signin-message"></div>
       </form>
 
-      <!-- Sign Up Form -->
-      <form id="signUpForm" style="display: none;">
+      <form id="signUpForm">
         <input type="text" id="signup-username" placeholder="Name" required>
         <input type="email" id="signup-email" placeholder="Email" required>
         <input type="password" id="signup-password" placeholder="Password" required>
@@ -98,67 +121,66 @@
     const signInForm = document.getElementById("signInForm");
     const signUpForm = document.getElementById("signUpForm");
 
-    // Open & Close Modal
     getStartedBtn.addEventListener("click", () => authModal.style.display = "flex");
     closeModal.addEventListener("click", () => authModal.style.display = "none");
 
-    // Switch Tabs
     signInTab.addEventListener("click", () => {
-      signInForm.style.display = "block";
-      signUpForm.style.display = "none";
+      signInForm.classList.add("active");
+      signUpForm.classList.remove("active");
       signInTab.classList.add("active");
       signUpTab.classList.remove("active");
     });
     signUpTab.addEventListener("click", () => {
-      signInForm.style.display = "none";
-      signUpForm.style.display = "block";
+      signInForm.classList.remove("active");
+      signUpForm.classList.add("active");
       signUpTab.classList.add("active");
       signInTab.classList.remove("active");
     });
 
-    // Store users locally
-    const users = JSON.parse(localStorage.getItem("users")) || [];
+    // Local Storage system
+    let users = JSON.parse(localStorage.getItem("users")) || [];
 
-    // Handle Sign Up
     signUpForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const username = document.getElementById("signup-username").value.trim();
       const email = document.getElementById("signup-email").value.trim();
       const password = document.getElementById("signup-password").value.trim();
-      const message = document.getElementById("signup-message");
+      const msg = document.getElementById("signup-message");
 
-      const existing = users.find(u => u.email === email);
-      if (existing) {
-        message.textContent = "⚠️ Email already registered!";
-        message.style.color = "red";
+      const exists = users.find(u => u.email === email);
+      if (exists) {
+        msg.textContent = "⚠️ Email already registered!";
+        msg.style.color = "red";
         return;
       }
 
       users.push({ username, email, password });
       localStorage.setItem("users", JSON.stringify(users));
-      message.textContent = "✅ Signed up successfully!";
-      message.style.color = "lime";
+      msg.textContent = "✅ Signed up successfully!";
+      msg.style.color = "lime";
       signUpForm.reset();
     });
 
-    // Handle Sign In
     signInForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const username = document.getElementById("signin-username").value.trim();
       const password = document.getElementById("signin-password").value.trim();
-      const message = document.getElementById("signin-message");
+      const msg = document.getElementById("signin-message");
 
-      const user = users.find(u => (u.username === username || u.email === username) && u.password === password);
+      const user = users.find(u => 
+        (u.username === username || u.email === username) && u.password === password
+      );
+
       if (user) {
-        message.textContent = "✅ Login successful!";
-        message.style.color = "lime";
+        msg.textContent = "✅ Login successful!";
+        msg.style.color = "lime";
         setTimeout(() => {
           alert(`Welcome back, ${user.username}!`);
           authModal.style.display = "none";
         }, 800);
       } else {
-        message.textContent = "❌ Invalid username or password!";
-        message.style.color = "red";
+        msg.textContent = "❌ Invalid username or password!";
+        msg.style.color = "red";
       }
     });
   </script>
