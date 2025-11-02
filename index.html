@@ -125,6 +125,11 @@ button:hover {
   transform: scale(1.1);
   color: #00cc00;
 }
+  body.popup-active {
+  filter: blur(6px);
+  pointer-events: none;
+  user-select: none;
+  }
 </style>
 </head>
 
@@ -167,9 +172,12 @@ button:hover {
 <script>
 function openPopup(id) {
   document.getElementById(id).style.display = "flex";
+  document.body.classList.add('popup-active');
 }
+
 function closePopup(id) {
   document.getElementById(id).style.display = "none";
+  document.body.classList.remove('popup-active');
 }
 function switchPopup() {
   closePopup('signup-popup');
