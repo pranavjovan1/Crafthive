@@ -128,6 +128,24 @@
 </div>
 
   <script>
+    <script type="module">
+  // ✅ Import Firebase SDKs
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+  // ✅ Your Firebase project configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDi2Gc1oJeBJBakMH1rbFOCkENf7pzDYsM",
+    authDomain: "crafthive-auth.firebaseapp.com",
+    projectId: "crafthive-auth",
+    storageBucket: "crafthive-auth.appspot.com",
+    messagingSenderId: "890742719601",
+    appId: "1:890742719601:web:f67eb41a8ce1015fc947d0"
+  };
+
+  // ✅ Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
     function openPopup(id){document.getElementById(id).style.display="flex";}
     function closePopup(id){document.getElementById(id).style.display="none";}
     function switchPopup(hideId,showId){closePopup(hideId);openPopup(showId);}
