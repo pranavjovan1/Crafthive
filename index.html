@@ -265,7 +265,29 @@ function logoutUser() {
   location.reload(); // refresh back to original homepage
 }
 
-window.onload = () => {
+function loginUser() {
+  const username = document.getElementById("signinUsername").value.trim();
+  const password = document.getElementById("signinPassword").value;
+
+  const savedUser = JSON.parse(localStorage.getItem("user"));
+
+  if (!savedUser) {
+    alert("No user found! Please sign up first.");
+    return false;
+  }
+
+  if (username === savedUser.username && password === savedUser.password) {
+    alert("✅ Login successful!");
+    localStorage.setItem("isLoggedIn", "true");
+    closePopup('signinPopup');
+    showWelcome(savedUser.username);
+  } else {
+    alert("❌ Invalid username or password!");
+  }
+
+  return false; // prevent form reload
+    }
+    window.onload = () => {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   const user = JSON.parse(localStorage.getItem("user"));
   if (isLoggedIn && user) {
