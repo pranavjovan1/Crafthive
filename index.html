@@ -6,34 +6,33 @@
 <title>CraftHive</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{
-    font-family:'Press Start 2P',cursive;
-    background:url('https://i.postimg.cc/RNDz8BC1/minecraft-bg.jpg') no-repeat center center/cover;
-    height:100vh;color:#00ff00;overflow:hidden;
-    display:flex;align-items:center;justify-content:center;text-align:center;
-  }
-  .wrap{background:rgba(0,0,0,0.45);padding:30px;border-radius:12px;box-shadow:0 0 30px rgba(0,255,128,0.15)}
-  h1{font-size:22px;text-shadow:0 0 8px #000;margin-bottom:8px}
-  p{font-size:11px;margin-bottom:18px;color:#ddd}
-  button.main{
-    padding:10px 22px;border:2px solid #00ff00;background:#000;color:#00ff00;
-    cursor:pointer;font-family:'Press Start 2P',cursive;transition:all .12s;
-  }
-  button.main:hover{background:#00ff00;color:#000;transform:scale(1.04)}
-  /* modal */
-  .modal{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.9);background:rgba(0,0,0,.98);
-    border:3px solid #00ff00;padding:20px;border-radius:12px;width:92%;max-width:380px;color:#fff;opacity:0;pointer-events:none;
-    box-shadow:0 0 30px #00ff00;transition:all .28s ease}
-  .modal.show{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}
-  .closeX{position:absolute;right:12px;top:8px;cursor:pointer;color:#00ff00;font-size:20px}
-  .tabs{display:flex;gap:6px;margin-bottom:12px}
-  .tab{flex:1;padding:8px;background:#111;border:2px solid #00ff00;color:#00ff00;font-size:11px;cursor:pointer}
-  .tab.active{background:#00ff00;color:#000}
-  form{display:none;flex-direction:column;gap:8px;align-items:center}
-  form.active{display:flex}
-  input{width:88%;padding:8px;border:2px solid #00ff00;background:#000;color:#00ff00;font-family:'Press Start 2P',cursive;font-size:11px}
-  .muteBtn{position:fixed;right:12px;bottom:12px;padding:6px 10px;border:2px solid #00ff00;background:#000;color:#00ff00;border-radius:8px;cursor:pointer}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Press Start 2P',cursive;
+  background:url('https://i.postimg.cc/RNDz8BC1/minecraft-bg.jpg') no-repeat center center/cover;
+  height:100vh;color:#00ff00;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+}
+.wrap{background:rgba(0,0,0,0.45);padding:30px;border-radius:12px;box-shadow:0 0 30px rgba(0,255,128,0.15)}
+h1{font-size:22px;text-shadow:0 0 8px #000;margin-bottom:8px}
+p{font-size:11px;margin-bottom:18px;color:#ddd}
+button.main{
+  padding:10px 22px;border:2px solid #00ff00;background:#000;color:#00ff00;
+  cursor:pointer;font-family:'Press Start 2P',cursive;transition:all .12s;
+}
+button.main:hover{background:#00ff00;color:#000;transform:scale(1.04)}
+.modal{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.9);background:rgba(0,0,0,.98);
+  border:3px solid #00ff00;padding:20px;border-radius:12px;width:92%;max-width:380px;color:#fff;opacity:0;pointer-events:none;
+  box-shadow:0 0 30px #00ff00;transition:all .28s ease}
+.modal.show{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}
+.closeX{position:absolute;right:12px;top:8px;cursor:pointer;color:#00ff00;font-size:20px}
+.tabs{display:flex;gap:6px;margin-bottom:12px}
+.tab{flex:1;padding:8px;background:#111;border:2px solid #00ff00;color:#00ff00;font-size:11px;cursor:pointer}
+.tab.active{background:#00ff00;color:#000}
+form{display:none;flex-direction:column;gap:8px;align-items:center}
+form.active{display:flex}
+input{width:88%;padding:8px;border:2px solid #00ff00;background:#000;color:#00ff00;font-family:'Press Start 2P',cursive;font-size:11px}
+.muteBtn{position:fixed;right:12px;bottom:12px;padding:6px 10px;border:2px solid #00ff00;background:#000;color:#00ff00;border-radius:8px;cursor:pointer}
 </style>
 </head>
 <body>
@@ -57,7 +56,6 @@
     <input id="si-username" placeholder="Username or Email" required />
     <input id="si-password" type="password" placeholder="Password" required />
     <button type="button" id="btnSignIn" class="main">SIGN IN</button>
-    <div id="si-msg" style="height:18px;margin-top:6px;color:#ccc;font-size:11px"></div>
   </form>
 
   <form id="formSignUp">
@@ -65,145 +63,87 @@
     <input id="su-password" type="password" placeholder="Password" required />
     <input id="su-email" type="email" placeholder="Email" required />
     <button type="button" id="btnSignUp" class="main">SIGN UP</button>
-    <div id="su-msg" style="height:18px;margin-top:6px;color:#ccc;font-size:11px"></div>
   </form>
 </div>
 
 <button id="muteBtn" class="muteBtn">🔊</button>
 
-<!-- audio elements (preload) -->
+<!-- Audio -->
 <audio id="click" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_55a2e1b38f.mp3?filename=click-124467.mp3"></audio>
 <audio id="open" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1a0a0d8764.mp3?filename=menu-open-125248.mp3"></audio>
 <audio id="bg" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_66ac70edb6.mp3?filename=game-loop-110397.mp3" loop></audio>
 
 <script>
-/*
- Robust sound + single-click mute logic.
- Replace the whole file with this; it resumes AudioContext on first user gesture,
- plays click/open sounds reliably (resetting currentTime) and toggles music with one click.
-*/
+const startBtn=document.getElementById('startBtn');
+const auth=document.getElementById('auth');
+const closeX=document.getElementById('closeX');
+const tabSignIn=document.getElementById('tabSignIn');
+const tabSignUp=document.getElementById('tabSignUp');
+const formSignIn=document.getElementById('formSignIn');
+const formSignUp=document.getElementById('formSignUp');
+const muteBtn=document.getElementById('muteBtn');
 
-const startBtn = document.getElementById('startBtn');
-const auth = document.getElementById('auth');
-const closeX = document.getElementById('closeX');
-const tabSignIn = document.getElementById('tabSignIn');
-const tabSignUp = document.getElementById('tabSignUp');
-const formSignIn = document.getElementById('formSignIn');
-const formSignUp = document.getElementById('formSignUp');
-const muteBtn = document.getElementById('muteBtn');
+const clickSnd=document.getElementById('click');
+const openSnd=document.getElementById('open');
+const bgSnd=document.getElementById('bg');
 
-const clickSnd = document.getElementById('click');
-const openSnd = document.getElementById('open');
-const bgSnd = document.getElementById('bg');
+let isMuted=false;
+let audioUnlocked=false;
 
-let audioCtx;
-let audioStarted = false; // indicates we've attempted starting sound after user gesture
+// Unlock sound for Chrome Android
+function unlockAudio(){
+  if(audioUnlocked) return;
+  const sounds=[clickSnd,openSnd,bgSnd];
+  sounds.forEach(a=>{
+    a.play().then(()=>{a.pause();a.currentTime=0;audioUnlocked=true;}).catch(()=>{});
+  });
+  document.body.removeEventListener('touchstart',unlockAudio);
+  document.body.removeEventListener('click',unlockAudio);
+}
+document.body.addEventListener('touchstart',unlockAudio);
+document.body.addEventListener('click',unlockAudio);
 
-// helper to safely play an HTMLAudioElement; returns a promise-like resolution
-function safePlay(audioEl){
-  try{
-    audioEl.currentTime = 0;
-  }catch(e){}
-  const p = audioEl.play();
-  if(p && p.catch){
-    p.catch(err=>{
-      // play rejected (browser policy) — we'll ignore, user can click mute button to retry bg start
-      console.warn('play() rejected:', err);
-    });
-  }
+function playSound(audio){
+  if(isMuted) return;
+  try{audio.currentTime=0;audio.play().catch(()=>{});}catch(e){}
 }
 
-// Helper to ensure WebAudio allowed in some browsers — resume audio context on user gesture
-async function ensureAudioContext(){
-  if(!audioCtx){
-    try{
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }catch(e){
-      audioCtx = null;
-    }
-  }
-  if(audioCtx && audioCtx.state === 'suspended'){
-    try{ await audioCtx.resume(); }catch(e){ /* ignore */ }
-  }
-  audioStarted = true;
-}
-
-// Start button: open modal and start sounds (allowed because it's a user gesture)
-startBtn.addEventListener('click', async () => {
-  // resume context (some browsers need it)
-  await ensureAudioContext();
-
-  // play short click then open sound; and try to start bg music
-  safePlay(clickSnd);
+startBtn.addEventListener('click',()=>{
+  playSound(clickSnd);
+  playSound(openSnd);
   auth.classList.add('show');
-  safePlay(openSnd);
-
-  // try to play background music; handle promise rejection gracefully
-  const p = bgSnd.play();
-  if(p && p.catch){
-    p.catch(err=>{
-      // If play was blocked, leave bg paused; user can toggle via mute button.
-      console.warn('bg play blocked:', err);
-      muteBtn.textContent = '🔇';
-    });
-  } else {
-    // started
-    muteBtn.textContent = '🔊';
+  if(!isMuted){
+    bgSnd.volume=0.4;
+    bgSnd.play().catch(()=>{});
   }
 });
 
-// Close modal
-closeX.addEventListener('click', ()=>{
-  safePlay(clickSnd);
+closeX.addEventListener('click',()=>{
+  playSound(clickSnd);
   auth.classList.remove('show');
 });
 
-// Tab switching
-tabSignIn.addEventListener('click', ()=>{
-  safePlay(clickSnd);
+tabSignIn.addEventListener('click',()=>{
+  playSound(clickSnd);
   tabSignIn.classList.add('active');
   tabSignUp.classList.remove('active');
   formSignIn.classList.add('active');
   formSignUp.classList.remove('active');
 });
-tabSignUp.addEventListener('click', ()=>{
-  safePlay(clickSnd);
+
+tabSignUp.addEventListener('click',()=>{
+  playSound(clickSnd);
   tabSignUp.classList.add('active');
   tabSignIn.classList.remove('active');
   formSignUp.classList.add('active');
   formSignIn.classList.remove('active');
 });
 
-// Mute/unmute single-click logic:
-// - If bg is paused, play (try to resume audio context first)
-// - If bg is playing, pause
-muteBtn.addEventListener('click', async ()=>{
-  await ensureAudioContext();
-  // if bg is paused or ended => play
-  if(bgSnd.paused){
-    const p = bgSnd.play();
-    if(p && p.catch){
-      p.catch(err=>{
-        console.warn('bg play rejected on muteBtn click:', err);
-        // update button to muted icon (since play failed)
-        muteBtn.textContent = '🔇';
-      });
-      // optimistically set UI
-      muteBtn.textContent = '🔊';
-    } else {
-      muteBtn.textContent = '🔊';
-    }
-  } else {
-    // bg is playing -> pause it
-    try { bgSnd.pause(); } catch(e){}
-    muteBtn.textContent = '🔇';
-  }
-});
-
-// Ensure click sounds can overlap; reset currentTime before playing in safePlay above.
-// Optional: stop audio on page unload to avoid hanging
-window.addEventListener('pagehide', ()=>{
-  try{ bgSnd.pause(); }catch(e){}
+muteBtn.addEventListener('click',()=>{
+  isMuted=!isMuted;
+  muteBtn.textContent=isMuted?'🔇':'🔊';
+  if(isMuted) bgSnd.pause();
+  else bgSnd.play().catch(()=>{});
 });
 </script>
 </body>
