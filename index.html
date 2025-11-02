@@ -1,264 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crafthive</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CraftHive</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Press Start 2P', cursive;
+    }
 
-<!-- Minecraft Pixel Font -->
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    body {
+      background: url('https://i.ibb.co/fY3jgGHJ/minecraft-java-and-bedrock-edition.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-align: center;
+    }
 
-<style>
-body {
-  margin: 0;
-  font-family: 'Press Start 2P', cursive;
-  background: url('https://i.ibb.co/fY3jgGHJ/minecraft-java-and-bedrock-edition.jpg') no-repeat center center/cover;
-  color: #fff;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  backdrop-filter: brightness(0.8);
-}
-h1 {
-  font-size: 28px;
-  color: #00ff00;
-  text-shadow: 3px 3px #000;
-  margin-bottom: 10px;
-}
-p {
-  margin: 0 0 30px 0;
-  font-size: 10px;
-  color: #ccc;
-  text-shadow: 1px 1px #000;
-}
-button {
-  background-color: #00ff00;
-  border: none;
-  padding: 12px 30px;
-  font-family: 'Press Start 2P', cursive;
-  color: #000;
-  cursor: pointer;
-  border-radius: 8px;
-  box-shadow: 0 0 10px #00ff00;
-  transition: all 0.2s;
-}
-button:hover {
-  background-color: #009900;
-  box-shadow: 0 0 20px #00ff00;
-  transform: scale(1.05);
-}
+    .content {
+      margin-top: 25vh;
+    }
 
-/* Popup styling */
-.popup {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.85);
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-}
-.popup-content {
-  background: #111;
-  border: 3px solid #00ff00;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 0 25px #00ff00;
-  width: 280px;
-  text-align: left;
-  position: relative;
-}
-.popup-content h2 {
-  font-size: 14px;
-  text-align: center;
-  color: #00ff00;
-  margin-bottom: 20px;
-}
-.popup-content input {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border: 2px solid #00ff00;
-  border-radius: 6px;
-  background: #000;
-  color: #fff;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 8px;
-  box-sizing: border-box;
-}
-.popup-content button {
-  width: 100%;
-  margin-top: 10px;
-}
-.close {
-  position: absolute;
-  top: 8px; right: 10px;
-  font-size: 16px;
-  color: #00ff00;
-  cursor: pointer;
-}
+    h1 {
+      font-size: 2.2rem;
+      text-shadow: 2px 2px 6px #000;
+    }
 
-/* Password box & toggle icon */
-.input-box {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-.input-box input {
-  width: 100%;
-  padding-right: 35px;
-}
-.toggle-password {
-  position: absolute;
-  right: 10px;
-  cursor: pointer;
-  user-select: none;
-  font-size: 14px;
-  color: #00ff00;
-  transition: 0.2s;
-}
-.toggle-password:hover {
-  transform: scale(1.1);
-  color: #00cc00;
-}
-</style>
+    p {
+      font-size: 1rem;
+      margin: 15px 0;
+      text-shadow: 1px 1px 4px #000;
+    }
+
+    button {
+      background-color: #00b300;
+      border: 2px solid #003300;
+      color: white;
+      padding: 15px 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: 0.2s;
+      text-shadow: 1px 1px 4px #000;
+    }
+
+    button:hover {
+      background-color: #009900;
+      transform: scale(1.05);
+    }
+
+    /* Popup Styles */
+    .popup {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .popup-content {
+      background: #222;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #000;
+      width: 320px;
+      text-align: center;
+    }
+
+    .popup-content input {
+      width: 90%;
+      padding: 10px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 8px;
+    }
+
+    .close {
+      color: white;
+      float: right;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: red;
+    }
+
+    a {
+      color: #00ffcc;
+      cursor: pointer;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
-
 <body>
-<h1>Crafthive</h1>
-<p>Welcome to Crafthive — your Minecraft adventure starts here!</p>
-<button onclick="openPopup('signup-popup')">Get Started</button>
-
-<!-- Sign Up Popup -->
-<!-- Sign Up Popup -->
-<div id="signupPopup" class="popup">
-  <div class="popup-content">
-    <span class="close" onclick="closePopup('signupPopup')">&times;</span>
-    <h2>Sign Up</h2>
-    <form id="signupForm" onsubmit="return false;">
-      <input type="text" id="signupUsername" placeholder="Username" required>
-      <input type="email" id="signupEmail" placeholder="Email" required>
-      <button type="button" id="sendCodeBtn" onclick="sendVerificationCode()">Send Verification Code</button>
-
-      <div id="verificationSection" style="display:none;">
-        <input type="text" id="verificationCode" placeholder="Enter Verification Code" required>
-        <button type="button" onclick="verifyCode()">Verify</button>
-      </div>
-
-      <div id="passwordSection" style="display:none;">
-        <input type="password" id="signupPassword" placeholder="Password" required>
-        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
-      </div>
-
-      <button type="submit" id="signupBtn" style="display:none;" onclick="completeSignup()">Sign Up</button>
-    </form>
-    <p>Already have an account? <a href="#" onclick="switchToSignIn()">Sign In</a></p>
+  <div class="content">
+    <h1>CraftHive</h1>
+    <p>Welcome to CraftHive — the gateway to your Minecraft world!</p>
+    <button onclick="openPopup('signupPopup')">Get Started</button>
   </div>
-</div>
 
-<!-- Sign In Popup -->
-<div class="popup" id="signin-popup">
-  <div class="popup-content">
-    <span class="close" onclick="closePopup('signin-popup')">&times;</span>
-    <h2>Sign In</h2>
-    <input type="text" id="signin-username" placeholder="Username" required>
-    <div class="input-box">
-      <input type="password" id="signin-password" placeholder="Password" required>
-      <span class="toggle-password" onclick="togglePassword('signin-password', this)">👁️</span>
+  <!-- Sign In Popup -->
+  <div id="signinPopup" class="popup">
+    <div class="popup-content">
+      <span class="close" onclick="closePopup('signinPopup')">&times;</span>
+      <h2>Sign In</h2>
+      <form>
+        <input type="text" placeholder="Username" required>
+        <input type="password" placeholder="Password" required>
+        <button type="submit">Sign In</button>
+      </form>
+      <p>Don't have an account? <a onclick="switchToSignUp()">Sign Up</a></p>
     </div>
-    <button onclick="signIn()">Sign In</button>
   </div>
-</div>
 
-<script>
-function openPopup(id) {
-  document.getElementById(id).style.display = "flex";
-}
-function closePopup(id) {
-  document.getElementById(id).style.display = "none";
-}
-function switchPopup() {
-  closePopup('signup-popup');
-  openPopup('signin-popup');
-}
-function togglePassword(id, el) {
-  const input = document.getElementById(id);
-  if (input.type === "password") {
-    input.type = "text";
-    el.textContent = "🙈";
-  } else {
-    input.type = "password";
-    el.textContent = "👁️";
-  }
-}
-function signUp() {
-  const user = document.getElementById("signup-username").value;
-  const pass = document.getElementById("signup-password").value;
-  if (user && pass) {
-    localStorage.setItem(user, pass);
-    alert("Account created! Now sign in.");
-    closePopup('signup-popup');
-    openPopup('signin-popup');
-  } else {
-    alert("Please enter a username and password.");
-  }
-}
-function signIn() {
-  const user = document.getElementById("signin-username").value;
-  const pass = document.getElementById("signin-password").value;
-  if (localStorage.getItem(user) === pass) {
-    alert("Welcome back, " + user + "!");
-    closePopup('signin-popup');
-  } else {
-    alert("Invalid username or password!");
-  }
-}
-  let generatedCode = "";
+  <!-- Sign Up Popup -->
+  <div id="signupPopup" class="popup">
+    <div class="popup-content">
+      <span class="close" onclick="closePopup('signupPopup')">&times;</span>
+      <h2>Sign Up</h2>
+      <form id="signupForm" onsubmit="return false;">
+        <input type="text" id="signupUsername" placeholder="Username" required>
+        <input type="email" id="signupEmail" placeholder="Email" required>
+        <button type="button" id="sendCodeBtn" onclick="sendVerificationCode()">Send Verification Code</button>
 
-function sendVerificationCode() {
-  const email = document.getElementById("signupEmail").value;
-  if (!email) {
-    alert("Please enter your email first!");
-    return;
-  }
+        <div id="verificationSection" style="display:none;">
+          <input type="text" id="verificationCode" placeholder="Enter Verification Code" required>
+          <button type="button" onclick="verifyCode()">Verify</button>
+        </div>
 
-  // Generate 6-digit code
-  generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
-  alert("Verification code sent to " + email + " (Demo: " + generatedCode + ")");
-  // In real website, send code using backend API like EmailJS or Firebase
+        <div id="passwordSection" style="display:none;">
+          <input type="password" id="signupPassword" placeholder="Password" required>
+          <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+        </div>
 
-  document.getElementById("verificationSection").style.display = "block";
-  document.getElementById("sendCodeBtn").disabled = true;
-}
+        <button type="submit" id="signupBtn" style="display:none;" onclick="completeSignup()">Sign Up</button>
+      </form>
+      <p>Already have an account? <a onclick="switchToSignIn()">Sign In</a></p>
+    </div>
+  </div>
 
-function verifyCode() {
-  const enteredCode = document.getElementById("verificationCode").value;
-  if (enteredCode === generatedCode) {
-    alert("Email verified successfully!");
-    document.getElementById("passwordSection").style.display = "block";
-    document.getElementById("signupBtn").style.display = "block";
-    document.getElementById("verificationSection").style.display = "none";
-  } else {
-    alert("Invalid verification code! Please try again.");
-  }
-}
+  <script>
+    function openPopup(id) {
+      document.getElementById(id).style.display = "flex";
+    }
 
-function completeSignup() {
-  const password = document.getElementById("signupPassword").value;
-  const confirmPassword = document.getElementById("confirmPassword").value;
+    function closePopup(id) {
+      document.getElementById(id).style.display = "none";
+    }
 
-  if (password !== confirmPassword) {
-    alert("Passwords do not match!");
-    return;
-  }
+    function switchToSignUp() {
+      closePopup('signinPopup');
+      openPopup('signupPopup');
+    }
 
-  alert("Account created successfully! You can now sign in.");
-  closePopup("signupPopup");
-}
-</script>
+    function switchToSignIn() {
+      closePopup('signupPopup');
+      openPopup('signinPopup');
+    }
+
+    // Signup verification demo
+    let generatedCode = "";
+
+    function sendVerificationCode() {
+      const email = document.getElementById("signupEmail").value;
+      if (!email) {
+        alert("Please enter your email first!");
+        return;
+      }
+
+      generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
+      alert("Verification code sent to " + email + " (Demo: " + generatedCode + ")");
+      document.getElementById("verificationSection").style.display = "block";
+      document.getElementById("sendCodeBtn").disabled = true;
+    }
+
+    function verifyCode() {
+      const enteredCode = document.getElementById("verificationCode").value;
+      if (enteredCode === generatedCode) {
+        alert("Email verified successfully!");
+        document.getElementById("passwordSection").style.display = "block";
+        document.getElementById("signupBtn").style.display = "block";
+        document.getElementById("verificationSection").style.display = "none";
+      } else {
+        alert("Invalid verification code! Please try again.");
+      }
+    }
+
+    function completeSignup() {
+      const password = document.getElementById("signupPassword").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      alert("Account created successfully! You can now sign in.");
+      closePopup("signupPopup");
+    }
+  </script>
 </body>
 </html>
