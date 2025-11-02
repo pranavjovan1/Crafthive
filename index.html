@@ -175,6 +175,8 @@
       emailjs.init("9TQ4B7r0yFmwzWEEj"); // 🔹 Replace with your EmailJS Public Key
     })();
     function completeSignup() {
+  const username = document.getElementById("signupUsername").value.trim();
+  const email = document.getElementById("signupEmail").value.trim();
   const password = document.getElementById("signupPassword").value;
   const confirmPassword = document.getElementById("confirmPassword").value;
 
@@ -183,9 +185,38 @@
     return;
   }
 
-  alert("🎉 Account created successfully! You can now sign in.");
+  // ✅ Save user data locally
+  const user = { username, email, password };
+  localStorage.setItem("user", JSON.stringify(user));
+  localStorage.setItem("isLoggedIn", "true");
+
+  alert("🎉 Account created! You are now logged in.");
   closePopup('signupPopup');
-    }
+  showWelcome(username);
+}
+
+function showWelcome(username) {
+  const body = document.body;
+  body.innerHTML = `
+    <h1>⚒️CraftHive⚒️</h1>
+    <p>Welcome, ${username}! You’re logged in.</p>
+    <button id="logoutBtn">Logout</button>
+  `;
+  document.getElementById("logoutBtn").addEventListener("click", logoutUser);
+}
+
+function logoutUser() {
+  localStorage.removeItem("isLoggedIn");
+  location.reload(); // refresh back to original homepage
+}
+
+window.onload = () => {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (isLoggedIn && user) {
+    showWelcome(user.username);
+  }
+};
   </script>
 </body>
   </html>
