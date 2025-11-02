@@ -29,8 +29,21 @@
       transition:0.2s;
     }
     button:hover{background-color:#00cc00;transform:scale(1.05)}
-    .popup{
-     #sendCodeBtn {
+    /* ✅ Popup styling */
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+}
+
+/* ✅ Send code button styling (separate) */
+#sendCodeBtn {
   background-color: #00cc00;
   border: 2px solid #00ff00;
   color: #000;
@@ -47,15 +60,7 @@
 #sendCodeBtn:hover {
   background-color: #009900;
   transform: scale(1.05);
-} 
-      display:none;
-      position:fixed;
-      top:0;left:0;
-      width:100%;height:100%;
-      background:rgba(0,0,0,0.7);
-      justify-content:center;
-      align-items:center;
-    }
+}
     .popup-content{
       background:#111;
       padding:25px;
