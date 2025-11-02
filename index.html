@@ -1,196 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CraftHive</title>
-  <link href="https://fonts.cdnfonts.com/css/minecraft-4" rel="stylesheet">
-  <style>
-    * {margin:0;padding:0;box-sizing:border-box;font-family:'Minecraft',sans-serif;}
-    body {
-      background:url('https://i.postimg.cc/RNDz8BC1/minecraft-bg.jpg') no-repeat center center/cover;
-      height:100vh;display:flex;justify-content:center;align-items:center;
-      color:white;text-align:center;overflow:hidden;
-    }
-    .overlay {
-      background-color:rgba(0,0,0,0.5);
-      position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;
-    }
-    .container {position:relative;z-index:1;}
-    h1 {
-      font-size:3em;color:#00ff66;
-      text-shadow:3px 3px 0px #000;margin-bottom:10px;
-    }
-    h2 {
-      font-size:2em;color:white;text-shadow:3px 3px 0px #000;margin-bottom:10px;
-    }
-    p {
-      font-size:1em;max-width:400px;margin:10px auto 30px;text-shadow:2px 2px 0px #000;
-    }
-    button {
-      background-color:#00ff00;border:3px solid black;padding:10px 25px;
-      cursor:pointer;font-size:1em;text-transform:uppercase;
-      box-shadow:0 5px 0 #006400;transition:all 0.1s ease-in-out;color:black;
-    }
-    button:hover {transform:translateY(2px);box-shadow:0 3px 0 #004d00;}
-
-    /* Modal */
-    .modal {
-      display:none;position:fixed;top:0;left:0;width:100%;height:100%;
-      background:rgba(0,0,0,0.9);justify-content:center;align-items:center;z-index:999;
-    }
-    .modal-content {
-      background:#000;border:2px solid #00ff66;padding:30px;border-radius:10px;
-      width:90%;max-width:400px;box-shadow:0 0 20px #00ff66;
-      color:white;text-align:center;position:relative;
-     form {
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CraftHive</title>
+<link href="https://fonts.cdnfonts.com/css/minecraft-4" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Minecraft',sans-serif;}
+body{
+  background:url('https://i.postimg.cc/RNDz8BC1/minecraft-bg.jpg') no-repeat center center/cover;
+  height:100vh;display:flex;justify-content:center;align-items:center;
+  color:white;text-align:center;overflow:hidden;position:relative;
+}
+.overlay{background-color:rgba(0,0,0,0.5);position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;}
+.container{position:relative;z-index:1;}
+h1{font-size:3em;color:#00ff66;text-shadow:3px 3px 0px #000;margin-bottom:10px;}
+h2{font-size:2em;color:white;text-shadow:3px 3px 0px #000;margin-bottom:20px;}
+p{font-size:1em;max-width:400px;margin:10px auto 30px;text-shadow:2px 2px 0px #000;}
+button{
+  background-color:#00ff00;border:3px solid black;padding:10px 25px;
+  cursor:pointer;font-size:1em;text-transform:uppercase;
+  box-shadow:0 5px 0 #006400;transition:all 0.1s ease-in-out;color:black;
+}
+button:hover{transform:translateY(2px);box-shadow:0 3px 0 #004d00;}
+.modal{
+  display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.9);justify-content:center;align-items:center;z-index:999;
+}
+.modal-content{
+  background:#000;border:2px solid #00ff66;padding:30px;border-radius:10px;
+  width:90%;max-width:400px;box-shadow:0 0 20px #00ff66;color:white;text-align:center;position:relative;
+}
+.modal-content h3{margin-bottom:20px;color:#00ff66;}
+.tabs{display:flex;justify-content:space-between;margin-bottom:20px;}
+.tabs button{
+  flex:1;margin:0 5px;font-size:0.9em;background-color:transparent;
+  border:2px solid #00ff66;color:white;text-shadow:2px 2px 0px #000;padding:8px;
+}
+.tabs button.active{background-color:#00ff66;color:black;}
+form {
   display: none;
   flex-direction: column;
   align-items: center;
 }
-
 form.active {
   display: flex;
-};
-    }
-    .modal-content h3 {margin-bottom:20px;color:#00ff66;}
-    .tabs {
-      display:flex;justify-content:space-between;margin-bottom:20px;width:100%;
-    }
-    .tabs button {
-      flex:1;margin:0 5px;font-size:0.9em;background-color:transparent;
-      border:2px solid #00ff66;color:white;text-shadow:2px 2px 0px #000;padding:8px;
-    }
-    .tabs button.active {background-color:#00ff66;color:black;}
-    .modal-content form {
-      display:none;flex-direction:column;width:100%;
-    }
-    .modal-content form.active {
-      display:flex;
-    }
-    .modal-content input {
-      width:100%;margin-bottom:15px;padding:10px;border:2px solid #00ff66;
-      background:black;color:white;text-align:center;
-    }
-    .close {
-      position:absolute;top:10px;right:20px;font-size:30px;color:white;cursor:pointer;
-    }
-    .close:hover {color:#00ff66;}
-    .submit-btn {
-      width:100%;background-color:#00ff00;color:black;border:3px solid #000;
-      padding:10px 0;font-size:1em;box-shadow:0 5px 0 #006400;transition:0.1s ease-in-out;
-    }
-    .submit-btn:hover {transform:translateY(2px);box-shadow:0 3px 0 #004d00;}
-    .message {margin-top:10px;font-size:0.9em;min-height:20px;}
-  </style>
+}
+.modal-content input{
+  width:100%;margin-bottom:15px;padding:10px;border:2px solid #00ff66;
+  background:black;color:white;text-align:center;font-family:'Minecraft',sans-serif;
+}
+.close{position:absolute;top:10px;right:20px;font-size:30px;color:white;cursor:pointer;}
+.close:hover{color:#00ff66;}
+.submit-btn{
+  width:100%;background-color:#00ff00;color:black;border:3px solid #000;
+  padding:10px 0;font-size:1em;box-shadow:0 5px 0 #006400;transition:0.1s ease-in-out;
+}
+.submit-btn:hover{transform:translateY(2px);box-shadow:0 3px 0 #004d00;}
+.message{margin-top:10px;font-size:0.9em;min-height:20px;}
+</style>
 </head>
 <body>
-  <div class="overlay"></div>
-  <div class="container">
-    <h1>CRAFTHIVE</h1>
-    <h2>WELCOME TO CRAFTHIVE</h2>
-    <p>Join the next level of Minecraft server hosting — performance, freedom, and creativity. Build your world with CraftHive today!</p>
-    <button id="getStartedBtn">Get Started</button>
-  </div>
+<div class="overlay"></div>
+<div class="container">
+  <h1>CRAFTHIVE</h1>
+  <h2>WELCOME TO CRAFTHIVE</h2>
+  <p>Join the next level of Minecraft server hosting — performance, freedom, and creativity. Build your world with CraftHive today!</p>
+  <button id="getStartedBtn">Get Started</button>
+</div>
 
-  <!-- Modal -->
-  <div class="modal" id="authModal">
-    <span class="close" id="closeModal">&times;</span>
-    <div class="modal-content">
-      <h3>WELCOME!</h3>
-      <div class="tabs">
-        <button id="signInTab" class="active">SIGN IN</button>
-        <button id="signUpTab">SIGN UP</button>
-      </div>
-
-      <form id="signInForm" class="active">
-        <input type="text" id="signin-username" placeholder="Username or Email" required>
-        <input type="password" id="signin-password" placeholder="Password" required>
-        <button type="submit" class="submit-btn">SIGN IN</button>
-        <div class="message" id="signin-message"></div>
-      </form>
-
-      <form id="signUpForm">
-        <input type="text" id="signup-username" placeholder="Name" required>
-        <input type="email" id="signup-email" placeholder="Email" required>
-        <input type="password" id="signup-password" placeholder="Password" required>
-        <button type="submit" class="submit-btn">SIGN UP</button>
-        <div class="message" id="signup-message"></div>
-      </form>
+<div class="modal" id="authModal">
+  <span class="close" id="closeModal">&times;</span>
+  <div class="modal-content">
+    <h3>WELCOME!</h3>
+    <div class="tabs">
+      <button id="signInTab" class="active">SIGN IN</button>
+      <button id="signUpTab">SIGN UP</button>
     </div>
+
+    <!-- Sign In Form -->
+    <form id="signInForm" class="active">
+      <input type="text" id="signin-username" placeholder="Username or Email" required>
+      <input type="password" id="signin-password" placeholder="Password" required>
+      <button type="submit" class="submit-btn">SIGN IN</button>
+      <div class="message" id="signin-message"></div>
+    </form>
+
+    <!-- Sign Up Form -->
+    <form id="signUpForm">
+      <input type="text" id="signup-username" placeholder="Name" required>
+      <input type="email" id="signup-email" placeholder="Email" required>
+      <input type="password" id="signup-password" placeholder="Password" required>
+      <button type="submit" class="submit-btn">SIGN UP</button>
+      <div class="message" id="signup-message"></div>
+    </form>
   </div>
+</div>
 
-  <script>
-    const getStartedBtn = document.getElementById("getStartedBtn");
-    const authModal = document.getElementById("authModal");
-    const closeModal = document.getElementById("closeModal");
-    const signInTab = document.getElementById("signInTab");
-    const signUpTab = document.getElementById("signUpTab");
-    const signInForm = document.getElementById("signInForm");
-    const signUpForm = document.getElementById("signUpForm");
+<script>
+const getStartedBtn=document.getElementById("getStartedBtn");
+const authModal=document.getElementById("authModal");
+const closeModal=document.getElementById("closeModal");
+const signInTab=document.getElementById("signInTab");
+const signUpTab=document.getElementById("signUpTab");
+const signInForm=document.getElementById("signInForm");
+const signUpForm=document.getElementById("signUpForm");
 
-    getStartedBtn.addEventListener("click", () => authModal.style.display = "flex");
-    closeModal.addEventListener("click", () => authModal.style.display = "none");
+// Open & Close
+getStartedBtn.onclick=()=>authModal.style.display="flex";
+closeModal.onclick=()=>authModal.style.display="none";
 
-    signInTab.addEventListener("click", () => {
-      signInForm.classList.add("active");
-      signUpForm.classList.remove("active");
-      signInTab.classList.add("active");
-      signUpTab.classList.remove("active");
-    });
-    signUpTab.addEventListener("click", () => {
-      signInForm.classList.remove("active");
-      signUpForm.classList.add("active");
-      signUpTab.classList.add("active");
-      signInTab.classList.remove("active");
-    });
+// Tabs switching
+signInTab.onclick=()=>{
+  signInTab.classList.add("active");
+  signUpTab.classList.remove("active");
+  signInForm.classList.add("active");
+  signUpForm.classList.remove("active");
+};
+signUpTab.onclick=()=>{
+  signUpTab.classList.add("active");
+  signInTab.classList.remove("active");
+  signUpForm.classList.add("active");
+  signInForm.classList.remove("active");
+};
 
-    // Local Storage system
-    let users = JSON.parse(localStorage.getItem("users")) || [];
+// localStorage system
+let users=JSON.parse(localStorage.getItem("users"))||[];
 
-    signUpForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const username = document.getElementById("signup-username").value.trim();
-      const email = document.getElementById("signup-email").value.trim();
-      const password = document.getElementById("signup-password").value.trim();
-      const msg = document.getElementById("signup-message");
+signUpForm.onsubmit=e=>{
+  e.preventDefault();
+  const name=document.getElementById("signup-username").value.trim();
+  const email=document.getElementById("signup-email").value.trim();
+  const pass=document.getElementById("signup-password").value.trim();
+  const msg=document.getElementById("signup-message");
+  if(users.find(u=>u.email===email)){msg.textContent="⚠️ Email already exists!";msg.style.color="red";return;}
+  users.push({name,email,pass});
+  localStorage.setItem("users",JSON.stringify(users));
+  msg.textContent="✅ Registered successfully!";msg.style.color="lime";
+  signUpForm.reset();
+};
 
-      const exists = users.find(u => u.email === email);
-      if (exists) {
-        msg.textContent = "⚠️ Email already registered!";
-        msg.style.color = "red";
-        return;
-      }
-
-      users.push({ username, email, password });
-      localStorage.setItem("users", JSON.stringify(users));
-      msg.textContent = "✅ Signed up successfully!";
-      msg.style.color = "lime";
-      signUpForm.reset();
-    });
-
-    signInForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const username = document.getElementById("signin-username").value.trim();
-      const password = document.getElementById("signin-password").value.trim();
-      const msg = document.getElementById("signin-message");
-
-      const user = users.find(u => 
-        (u.username === username || u.email === username) && u.password === password
-      );
-
-      if (user) {
-        msg.textContent = "✅ Login successful!";
-        msg.style.color = "lime";
-        setTimeout(() => {
-          alert(`Welcome back, ${user.username}!`);
-          authModal.style.display = "none";
-        }, 800);
-      } else {
-        msg.textContent = "❌ Invalid username or password!";
-        msg.style.color = "red";
-      }
-    });
-  </script>
+signInForm.onsubmit=e=>{
+  e.preventDefault();
+  const id=document.getElementById("signin-username").value.trim();
+  const pass=document.getElementById("signin-password").value.trim();
+  const msg=document.getElementById("signin-message");
+  const u=users.find(u=>(u.email===id||u.name===id)&&u.pass===pass);
+  if(u){
+    msg.textContent="✅ Login successful!";msg.style.color="lime";
+    setTimeout(()=>{alert(`Welcome back, ${u.name}!`);authModal.style.display="none";},800);
+  }else{
+    msg.textContent="❌ Wrong username or password!";msg.style.color="red";
+  }
+};
+</script>
 </body>
 </html>
