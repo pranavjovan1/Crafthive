@@ -6,131 +6,130 @@
 <title>Crafthive</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  background:url('https://i.postimg.cc/RNDz8BC1/minecraft-bg.jpg') no-repeat center center/cover;
+  font-family:'Press Start 2P',cursive;
+  color:#00ff00;
+  text-align:center;
+  height:100vh;
+  overflow:hidden;
 }
-body {
-  background: url('https://postimg.cc/RNDz8BC1') no-repeat center center/cover;
-  font-family: 'Press Start 2P', cursive;
-  color: #00ff00;
-  text-align: center;
-  height: 100vh;
-  overflow: hidden;
+.overlay{
+  background:rgba(0,0,0,0.55);
+  height:100%;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 }
-.overlay {
-  background: rgba(0, 0, 0, 0.5);
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+h1{
+  font-size:24px;
+  text-shadow:2px 2px #000;
+  animation:glow 1.5s infinite alternate;
 }
-h1 {
-  font-size: 22px;
-  text-shadow: 2px 2px #000;
-  animation: glow 1.5s infinite alternate;
+@keyframes glow{
+  from{text-shadow:0 0 10px #00ff00;}
+  to{text-shadow:0 0 20px #00ff00;}
 }
-@keyframes glow {
-  from { text-shadow: 0 0 10px #00ff00; }
-  to { text-shadow: 0 0 20px #00ff00; }
+p{
+  margin-top:20px;
+  font-size:11px;
 }
-p {
-  margin-top: 20px;
-  font-size: 10px;
+button{
+  margin-top:30px;
+  padding:10px 25px;
+  border:2px solid #00ff00;
+  background:black;
+  color:#00ff00;
+  font-family:'Press Start 2P',cursive;
+  cursor:pointer;
+  transition:all 0.2s;
 }
-button {
-  margin-top: 30px;
-  padding: 10px 25px;
-  border: 2px solid #00ff00;
-  background: black;
-  color: #00ff00;
-  font-family: 'Press Start 2P', cursive;
-  cursor: pointer;
-  transition: all 0.2s;
+button:hover{
+  background:#00ff00;
+  color:black;
+  transform:scale(1.1);
 }
-button:hover {
-  background: #00ff00;
-  color: black;
-  transform: scale(1.1);
+.modal{
+  display:none;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0.8);
+  background:rgba(0,0,0,0.95);
+  border:3px solid #00ff00;
+  padding:25px;
+  border-radius:10px;
+  text-align:center;
+  width:90%;
+  max-width:350px;
+  color:white;
+  box-shadow:0 0 25px #00ff00;
+  opacity:0;
+  transition:all 0.4s ease-in-out;
 }
-.modal {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.8);
-  background: rgba(0, 0, 0, 0.95);
-  border: 3px solid #00ff00;
-  padding: 25px;
-  border-radius: 10px;
-  text-align: center;
-  width: 90%;
-  max-width: 350px;
-  color: white;
-  box-shadow: 0 0 25px #00ff00;
-  opacity: 0;
-  transition: all 0.4s ease-in-out;
+.modal.active{
+  display:block;
+  transform:translate(-50%,-50%) scale(1);
+  opacity:1;
 }
-.modal.active {
-  display: block;
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 1;
+.close{
+  position:absolute;
+  top:5px;
+  right:10px;
+  cursor:pointer;
+  color:#00ff00;
+  font-size:18px;
 }
-.close {
-  position: absolute;
-  top: 5px;
-  right: 10px;
-  cursor: pointer;
-  color: #00ff00;
-  font-size: 18px;
+.tab-container{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:10px;
 }
-.tab-container {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
+.tab{
+  width:48%;
+  padding:10px;
+  cursor:pointer;
+  background:#222;
+  color:#00ff00;
+  border:2px solid #00ff00;
+  font-size:10px;
 }
-.tab {
-  width: 48%;
-  padding: 10px;
-  cursor: pointer;
-  background: #222;
-  color: #00ff00;
-  border: 2px solid #00ff00;
-  font-size: 10px;
+.tab.active{
+  background:#00ff00;
+  color:#000;
 }
-.tab.active {
-  background: #00ff00;
-  color: #000;
+form{
+  display:none;
+  flex-direction:column;
+  align-items:center;
 }
-form {
-  display: none;
-  flex-direction: column;
-  align-items: center;
+form.active{display:flex;}
+input{
+  margin:6px 0;
+  padding:8px;
+  width:80%;
+  border:2px solid #00ff00;
+  background:black;
+  color:#00ff00;
+  font-family:'Press Start 2P',cursive;
 }
-form.active {
-  display: flex;
+#muteBtn{
+  position:fixed;
+  bottom:10px;
+  right:10px;
+  background:black;
+  border:2px solid #00ff00;
+  color:#00ff00;
+  padding:5px 10px;
+  font-size:10px;
+  border-radius:8px;
 }
-input {
-  margin: 6px 0;
-  padding: 8px;
-  width: 80%;
-  border: 2px solid #00ff00;
-  background: black;
-  color: #00ff00;
-  font-family: 'Press Start 2P', cursive;
-}
-#muteBtn {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  background: black;
-  border: 2px solid #00ff00;
-  color: #00ff00;
-  padding: 5px 10px;
-  font-size: 10px;
+#muteBtn:hover{
+  background:#00ff00;
+  color:black;
 }
 </style>
 </head>
@@ -167,50 +166,56 @@ input {
 <audio id="bgMusic" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_66ac70edb6.mp3?filename=game-loop-110397.mp3" loop></audio>
 
 <script>
-const startBtn = document.getElementById("startBtn");
-const authModal = document.getElementById("authModal");
-const closeModal = document.getElementById("closeModal");
-const signInTab = document.getElementById("signInTab");
-const signUpTab = document.getElementById("signUpTab");
-const signInForm = document.getElementById("signInForm");
-const signUpForm = document.getElementById("signUpForm");
-const clickSound = document.getElementById("clickSound");
-const openSound = document.getElementById("openSound");
-const bgMusic = document.getElementById("bgMusic");
-const muteBtn = document.getElementById("muteBtn");
+const startBtn=document.getElementById("startBtn");
+const authModal=document.getElementById("authModal");
+const closeModal=document.getElementById("closeModal");
+const signInTab=document.getElementById("signInTab");
+const signUpTab=document.getElementById("signUpTab");
+const signInForm=document.getElementById("signInForm");
+const signUpForm=document.getElementById("signUpForm");
+const clickSound=document.getElementById("clickSound");
+const openSound=document.getElementById("openSound");
+const bgMusic=document.getElementById("bgMusic");
+const muteBtn=document.getElementById("muteBtn");
 
-startBtn.onclick = () => {
+// Show modal
+startBtn.onclick=()=>{
   clickSound.play();
   authModal.classList.add("active");
   openSound.play();
 };
-closeModal.onclick = () => {
+// Close modal
+closeModal.onclick=()=>{
   clickSound.play();
   authModal.classList.remove("active");
 };
-signInTab.onclick = () => {
+// Tab switch
+signInTab.onclick=()=>{
   clickSound.play();
   signInTab.classList.add("active");
   signUpTab.classList.remove("active");
   signInForm.classList.add("active");
   signUpForm.classList.remove("active");
 };
-signUpTab.onclick = () => {
+signUpTab.onclick=()=>{
   clickSound.play();
   signUpTab.classList.add("active");
   signInTab.classList.remove("active");
   signUpForm.classList.add("active");
   signInForm.classList.remove("active");
 };
-bgMusic.volume = 0.4;
-bgMusic.play();
-muteBtn.onclick = () => {
-  if (bgMusic.paused) {
+
+// Background music toggle
+let musicPlaying=false;
+muteBtn.onclick=()=>{
+  if(!musicPlaying){
     bgMusic.play();
-    muteBtn.textContent = "🔊 Music";
-  } else {
+    muteBtn.textContent="🔊 Music";
+    musicPlaying=true;
+  }else{
     bgMusic.pause();
-    muteBtn.textContent = "🔇 Muted";
+    muteBtn.textContent="🔇 Muted";
+    musicPlaying=false;
   }
 };
 </script>
