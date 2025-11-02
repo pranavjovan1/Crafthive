@@ -78,10 +78,22 @@ button:hover {
   display: block;
 }
 
-.tabs {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
+.tab {
+  width: 48%;
+  padding: 12px 4px;
+  cursor: pointer;
+  background: #222;
+  color: #00ff00;
+  border: 2px solid #00ff00;
+  font-size: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tab.active {
+  background: #00ff00;
+  color: #000;
 }
 
 .tab {
@@ -116,7 +128,23 @@ input {
   background: #111;
   color: white;
   font-family: 'Press Start 2P', cursive;
+  fo.tab {
+  width: 48%;
+  padding: 12px 4px;
+  cursor: pointer;
+  background: #222;
+  color: #00ff00;
+  border: 2px solid #00ff00;
   font-size: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tab.active {
+  background: #00ff00;
+  color: #000;
+  }nt-size: 10px;
 }
 
 .submit-btn {
