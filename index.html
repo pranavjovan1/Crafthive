@@ -4,11 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Crafthive</title>
+
+<!-- Minecraft Pixel Font -->
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
 <style>
 body {
   margin: 0;
   font-family: 'Press Start 2P', cursive;
-  background: url('https://postimg.cc/RNDz8BC1') no-repeat center center/cover;
+  background: url('https://i.imgur.com/S8D3F1p.jpeg') no-repeat center center/cover; /* ✅ working image */
   color: #fff;
   height: 100vh;
   display: flex;
@@ -18,15 +22,16 @@ body {
   text-align: center;
 }
 h1 {
-  font-size: 32px;
+  font-size: 28px;
   color: #00ff00;
-  text-shadow: 2px 2px #000;
+  text-shadow: 3px 3px #000;
   margin-bottom: 10px;
 }
 p {
   margin: 0 0 30px 0;
-  font-size: 14px;
+  font-size: 10px;
   color: #ccc;
+  text-shadow: 1px 1px #000;
 }
 button {
   background-color: #00ff00;
@@ -67,7 +72,7 @@ button:hover {
   position: relative;
 }
 .popup-content h2 {
-  font-size: 18px;
+  font-size: 14px;
   text-align: center;
   color: #00ff00;
   margin-bottom: 20px;
@@ -81,7 +86,7 @@ button:hover {
   background: #000;
   color: #fff;
   font-family: 'Press Start 2P', cursive;
-  font-size: 10px;
+  font-size: 8px;
   box-sizing: border-box;
 }
 .popup-content button {
@@ -91,12 +96,12 @@ button:hover {
 .close {
   position: absolute;
   top: 8px; right: 10px;
-  font-size: 18px;
+  font-size: 16px;
   color: #00ff00;
   cursor: pointer;
 }
 
-/* Password box and toggle icon */
+/* Password box & toggle icon */
 .input-box {
   position: relative;
   display: flex;
@@ -104,14 +109,14 @@ button:hover {
 }
 .input-box input {
   width: 100%;
-  padding-right: 40px;
+  padding-right: 35px;
 }
 .toggle-password {
   position: absolute;
   right: 10px;
   cursor: pointer;
   user-select: none;
-  font-size: 16px;
+  font-size: 14px;
   color: #00ff00;
   transition: 0.2s;
 }
@@ -138,7 +143,7 @@ button:hover {
       <span class="toggle-password" onclick="togglePassword('signup-password', this)">👁️</span>
     </div>
     <button onclick="signUp()">Sign Up</button>
-    <p style="text-align:center;font-size:10px;margin-top:10px;">
+    <p style="text-align:center;font-size:8px;margin-top:10px;">
       Already have an account? <a href="#" style="color:#00ff00;" onclick="switchPopup()">Sign In</a>
     </p>
   </div>
@@ -203,4 +208,4 @@ function signIn() {
 }
 </script>
 </body>
-      </html>
+</html>
