@@ -4,180 +4,215 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Crafthive</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.cdnfonts.com/css/minecraft-4');
-* {margin:0;padding:0;box-sizing:border-box;font-family:'Minecraft',sans-serif;}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 body {
-  background:url('https://i.postimg.cc/RNDz8BC1/bg.jpg') no-repeat center center/cover;
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  color:white;
-  text-shadow:2px 2px 0 #000;
+  background: url('https://postimg.cc/RNDz8BC1') no-repeat center center/cover;
+  font-family: 'Press Start 2P', cursive;
+  color: #00ff00;
+  text-align: center;
+  height: 100vh;
+  overflow: hidden;
+}
+.overlay {
+  background: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 h1 {
-  font-size:60px;
-  color:#00ff80;
-  text-align:center;
-  margin-bottom:10px;
+  font-size: 22px;
+  text-shadow: 2px 2px #000;
+  animation: glow 1.5s infinite alternate;
+}
+@keyframes glow {
+  from { text-shadow: 0 0 10px #00ff00; }
+  to { text-shadow: 0 0 20px #00ff00; }
 }
 p {
-  font-size:18px;
-  color:#ddd;
-  text-align:center;
-  margin-bottom:40px;
+  margin-top: 20px;
+  font-size: 10px;
 }
 button {
-  background:#00ff80;
-  color:black;
-  font-size:18px;
-  padding:12px 25px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  transition:all 0.2s;
+  margin-top: 30px;
+  padding: 10px 25px;
+  border: 2px solid #00ff00;
+  background: black;
+  color: #00ff00;
+  font-family: 'Press Start 2P', cursive;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 button:hover {
-  background:#00cc66;
-  transform:scale(1.05);
+  background: #00ff00;
+  color: black;
+  transform: scale(1.1);
 }
-
-/* Modal background */
 .modal {
-  position:fixed;
-  top:0;left:0;width:100%;height:100%;
-  background:rgba(0,0,0,0.8);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:10;
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  background: rgba(0, 0, 0, 0.95);
+  border: 3px solid #00ff00;
+  padding: 25px;
+  border-radius: 10px;
+  text-align: center;
+  width: 90%;
+  max-width: 350px;
+  color: white;
+  box-shadow: 0 0 25px #00ff00;
+  opacity: 0;
+  transition: all 0.4s ease-in-out;
 }
-
-/* Modal box */
-.modal-content {
-  background:#000;
-  border:2px solid #00ff80;
-  padding:30px;
-  border-radius:20px;
-  width:320px;
-  box-shadow:0 0 20px #00ff80;
-  position:relative;
+.modal.active {
+  display: block;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
 }
-
-/* Cross mark */
 .close {
-  position:absolute;
-  top:10px;
-  right:15px;
-  font-size:24px;
-  color:#00ff80;
-  cursor:pointer;
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+  color: #00ff00;
+  font-size: 18px;
 }
-
-/* Tabs */
+.tab-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
 .tab {
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:20px;
+  width: 48%;
+  padding: 10px;
+  cursor: pointer;
+  background: #222;
+  color: #00ff00;
+  border: 2px solid #00ff00;
+  font-size: 10px;
 }
-.tab button {
-  flex:1;
-  margin:2px;
-  background:none;
-  color:#00ff80;
-  border:2px solid #00ff80;
-  border-radius:5px;
-  font-size:14px;
+.tab.active {
+  background: #00ff00;
+  color: #000;
 }
-.tab button.active {
-  background:#00ff80;
-  color:black;
+form {
+  display: none;
+  flex-direction: column;
+  align-items: center;
 }
-
-/* Inputs */
+form.active {
+  display: flex;
+}
 input {
-  width:100%;
-  padding:10px;
-  margin:8px 0;
-  background:black;
-  border:2px solid #00ff80;
-  border-radius:5px;
-  color:#00ff80;
+  margin: 6px 0;
+  padding: 8px;
+  width: 80%;
+  border: 2px solid #00ff00;
+  background: black;
+  color: #00ff00;
+  font-family: 'Press Start 2P', cursive;
 }
-input::placeholder {color:#00ff80;}
-
-.modal-content button.submit {
-  width:100%;
-  background:#00ff80;
-  color:black;
-  padding:12px;
-  border:none;
-  border-radius:5px;
-  margin-top:10px;
-  font-size:16px;
-}
-.modal-content button.submit:hover {
-  background:#00cc66;
+#muteBtn {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: black;
+  border: 2px solid #00ff00;
+  color: #00ff00;
+  padding: 5px 10px;
+  font-size: 10px;
 }
 </style>
 </head>
 <body>
-  <h1>CRAFT HIVE</h1>
-  <p>Welcome to the world of blocks and creativity — start your journey today</p>
-  <button id="getStartedBtn">Get Started</button>
+<div class="overlay">
+  <h1>CRAFTHIVE</h1>
+  <p>Welcome to the world of blocks, adventure, and creativity!</p>
+  <button id="startBtn">GET STARTED</button>
+</div>
 
-  <!-- Modal -->
-  <div class="modal" id="authModal">
-    <div class="modal-content">
-      <span class="close" id="closeBtn">&times;</span>
-      <h2 style="text-align:center;color:#00ff80;">Welcome!</h2>
-      <div class="tab">
-        <button id="signInTab" class="active">Sign In</button>
-        <button id="signUpTab">Sign Up</button>
-      </div>
-
-      <div id="signInForm">
-        <input type="text" placeholder="Username or Email">
-        <input type="password" placeholder="Password">
-        <button class="submit">Sign In</button>
-      </div>
-
-      <div id="signUpForm" style="display:none;">
-        <input type="text" placeholder="Name">
-        <input type="email" placeholder="Email">
-        <input type="password" placeholder="Password">
-        <button class="submit">Sign Up</button>
-      </div>
-    </div>
+<div class="modal" id="authModal">
+  <span class="close" id="closeModal">✖</span>
+  <div class="tab-container">
+    <div class="tab active" id="signInTab">SIGN IN</div>
+    <div class="tab" id="signUpTab">SIGN UP</div>
   </div>
+  <form id="signInForm" class="active">
+    <input type="text" placeholder="Username">
+    <input type="password" placeholder="Password">
+    <button type="button">LOGIN</button>
+  </form>
+  <form id="signUpForm">
+    <input type="text" placeholder="Username">
+    <input type="password" placeholder="Password">
+    <input type="email" placeholder="Email">
+    <button type="button">REGISTER</button>
+  </form>
+</div>
+
+<button id="muteBtn">🔊 Music</button>
+
+<audio id="clickSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_55a2e1b38f.mp3?filename=click-124467.mp3"></audio>
+<audio id="openSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1a0a0d8764.mp3?filename=menu-open-125248.mp3"></audio>
+<audio id="bgMusic" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_66ac70edb6.mp3?filename=game-loop-110397.mp3" loop></audio>
 
 <script>
-const modal = document.getElementById('authModal');
-const openBtn = document.getElementById('getStartedBtn');
-const closeBtn = document.getElementById('closeBtn');
-const signInTab = document.getElementById('signInTab');
-const signUpTab = document.getElementById('signUpTab');
-const signInForm = document.getElementById('signInForm');
-const signUpForm = document.getElementById('signUpForm');
+const startBtn = document.getElementById("startBtn");
+const authModal = document.getElementById("authModal");
+const closeModal = document.getElementById("closeModal");
+const signInTab = document.getElementById("signInTab");
+const signUpTab = document.getElementById("signUpTab");
+const signInForm = document.getElementById("signInForm");
+const signUpForm = document.getElementById("signUpForm");
+const clickSound = document.getElementById("clickSound");
+const openSound = document.getElementById("openSound");
+const bgMusic = document.getElementById("bgMusic");
+const muteBtn = document.getElementById("muteBtn");
 
-openBtn.onclick = () => modal.style.display = 'flex';
-closeBtn.onclick = () => modal.style.display = 'none';
-window.onclick = e => { if(e.target == modal) modal.style.display='none'; }
-
+startBtn.onclick = () => {
+  clickSound.play();
+  authModal.classList.add("active");
+  openSound.play();
+};
+closeModal.onclick = () => {
+  clickSound.play();
+  authModal.classList.remove("active");
+};
 signInTab.onclick = () => {
-  signInForm.style.display = 'block';
-  signUpForm.style.display = 'none';
-  signInTab.classList.add('active');
-  signUpTab.classList.remove('active');
-}
+  clickSound.play();
+  signInTab.classList.add("active");
+  signUpTab.classList.remove("active");
+  signInForm.classList.add("active");
+  signUpForm.classList.remove("active");
+};
 signUpTab.onclick = () => {
-  signUpForm.style.display = 'block';
-  signInForm.style.display = 'none';
-  signUpTab.classList.add('active');
-  signInTab.classList.remove('active');
-}
+  clickSound.play();
+  signUpTab.classList.add("active");
+  signInTab.classList.remove("active");
+  signUpForm.classList.add("active");
+  signInForm.classList.remove("active");
+};
+bgMusic.volume = 0.4;
+bgMusic.play();
+muteBtn.onclick = () => {
+  if (bgMusic.paused) {
+    bgMusic.play();
+    muteBtn.textContent = "🔊 Music";
+  } else {
+    bgMusic.pause();
+    muteBtn.textContent = "🔇 Muted";
+  }
+};
 </script>
 </body>
 </html>
