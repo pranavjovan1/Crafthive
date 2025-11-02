@@ -13,26 +13,96 @@ body{
   height:100vh;color:#00ff00;overflow:hidden;
   display:flex;align-items:center;justify-content:center;text-align:center;
 }
-.wrap{background:rgba(0,0,0,0.45);padding:30px;border-radius:12px;box-shadow:0 0 30px rgba(0,255,128,0.15)}
-h1{font-size:22px;text-shadow:0 0 8px #000;margin-bottom:8px}
-p{font-size:11px;margin-bottom:18px;color:#ddd}
-button.main{
-  padding:10px 22px;border:2px solid #00ff00;background:#000;color:#00ff00;
-  cursor:pointer;font-family:'Press Start 2P',cursive;transition:all .12s;
+.wrap{
+  background:rgba(0,0,0,0.45);
+  padding:30px;border-radius:12px;
+  box-shadow:0 0 30px rgba(0,255,128,0.15);
 }
-button.main:hover{background:#00ff00;color:#000;transform:scale(1.04)}
-.modal{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.9);background:rgba(0,0,0,.98);
-  border:3px solid #00ff00;padding:20px;border-radius:12px;width:92%;max-width:380px;color:#fff;opacity:0;pointer-events:none;
-  box-shadow:0 0 30px #00ff00;transition:all .28s ease}
-.modal.show{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}
-.closeX{position:absolute;right:12px;top:8px;cursor:pointer;color:#00ff00;font-size:20px}
-.tabs{display:flex;gap:6px;margin-bottom:12px}
-.tab{flex:1;padding:8px;background:#111;border:2px solid #00ff00;color:#00ff00;font-size:11px;cursor:pointer}
-.tab.active{background:#00ff00;color:#000}
-form{display:none;flex-direction:column;gap:8px;align-items:center}
-form.active{display:flex}
-input{width:88%;padding:8px;border:2px solid #00ff00;background:#000;color:#00ff00;font-family:'Press Start 2P',cursive;font-size:11px}
-.muteBtn{position:fixed;right:12px;bottom:12px;padding:6px 10px;border:2px solid #00ff00;background:#000;color:#00ff00;border-radius:8px;cursor:pointer}
+h1{
+  font-size:22px;
+  text-shadow:0 0 8px #000;
+  margin-bottom:8px;
+}
+p{
+  font-size:11px;
+  margin-bottom:18px;
+  color:#ddd;
+}
+button.main{
+  padding:10px 22px;
+  border:2px solid #00ff00;
+  background:#000;
+  color:#00ff00;
+  cursor:pointer;
+  font-family:'Press Start 2P',cursive;
+  transition:all .12s;
+}
+button.main:hover{
+  background:#00ff00;
+  color:#000;
+  transform:scale(1.04);
+}
+.modal{
+  position:fixed;
+  left:50%;top:50%;
+  transform:translate(-50%,-50%) scale(.9);
+  background:rgba(0,0,0,.98);
+  border:3px solid #00ff00;
+  padding:20px;border-radius:12px;
+  width:92%;max-width:380px;
+  color:#fff;opacity:0;
+  pointer-events:none;
+  box-shadow:0 0 30px #00ff00;
+  transition:all .28s ease;
+}
+.modal.show{
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
+  pointer-events:auto;
+}
+.closeX{
+  position:absolute;
+  right:12px;top:8px;
+  cursor:pointer;
+  color:#00ff00;
+  font-size:20px;
+}
+.tabs{
+  display:flex;
+  gap:6px;
+  margin-bottom:12px;
+}
+.tab{
+  flex:1;
+  padding:8px;
+  background:#111;
+  border:2px solid #00ff00;
+  color:#00ff00;
+  font-size:11px;
+  cursor:pointer;
+}
+.tab.active{
+  background:#00ff00;
+  color:#000;
+}
+form{
+  display:none;
+  flex-direction:column;
+  gap:8px;
+  align-items:center;
+}
+form.active{
+  display:flex;
+}
+input{
+  width:88%;
+  padding:8px;
+  border:2px solid #00ff00;
+  background:#000;
+  color:#00ff00;
+  font-family:'Press Start 2P',cursive;
+  font-size:11px;
+}
 </style>
 </head>
 <body>
@@ -66,13 +136,6 @@ input{width:88%;padding:8px;border:2px solid #00ff00;background:#000;color:#00ff
   </form>
 </div>
 
-<button id="muteBtn" class="muteBtn">🔊</button>
-
-<!-- Audio -->
-<audio id="click" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_55a2e1b38f.mp3?filename=click-124467.mp3"></audio>
-<audio id="open" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1a0a0d8764.mp3?filename=menu-open-125248.mp3"></audio>
-<audio id="bg" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_66ac70edb6.mp3?filename=game-loop-110397.mp3" loop></audio>
-
 <script>
 const startBtn=document.getElementById('startBtn');
 const auth=document.getElementById('auth');
@@ -81,70 +144,22 @@ const tabSignIn=document.getElementById('tabSignIn');
 const tabSignUp=document.getElementById('tabSignUp');
 const formSignIn=document.getElementById('formSignIn');
 const formSignUp=document.getElementById('formSignUp');
-const muteBtn=document.getElementById('muteBtn');
 
-const clickSnd=document.getElementById('click');
-const openSnd=document.getElementById('open');
-const bgSnd=document.getElementById('bg');
+startBtn.onclick=()=>{auth.classList.add('show');};
+closeX.onclick=()=>{auth.classList.remove('show');};
 
-let isMuted=false;
-let audioUnlocked=false;
-
-// Unlock sound for Chrome Android
-function unlockAudio(){
-  if(audioUnlocked) return;
-  const sounds=[clickSnd,openSnd,bgSnd];
-  sounds.forEach(a=>{
-    a.play().then(()=>{a.pause();a.currentTime=0;audioUnlocked=true;}).catch(()=>{});
-  });
-  document.body.removeEventListener('touchstart',unlockAudio);
-  document.body.removeEventListener('click',unlockAudio);
-}
-document.body.addEventListener('touchstart',unlockAudio);
-document.body.addEventListener('click',unlockAudio);
-
-function playSound(audio){
-  if(isMuted) return;
-  try{audio.currentTime=0;audio.play().catch(()=>{});}catch(e){}
-}
-
-startBtn.addEventListener('click',()=>{
-  playSound(clickSnd);
-  playSound(openSnd);
-  auth.classList.add('show');
-  if(!isMuted){
-    bgSnd.volume=0.4;
-    bgSnd.play().catch(()=>{});
-  }
-});
-
-closeX.addEventListener('click',()=>{
-  playSound(clickSnd);
-  auth.classList.remove('show');
-});
-
-tabSignIn.addEventListener('click',()=>{
-  playSound(clickSnd);
+tabSignIn.onclick=()=>{
   tabSignIn.classList.add('active');
   tabSignUp.classList.remove('active');
   formSignIn.classList.add('active');
   formSignUp.classList.remove('active');
-});
-
-tabSignUp.addEventListener('click',()=>{
-  playSound(clickSnd);
+};
+tabSignUp.onclick=()=>{
   tabSignUp.classList.add('active');
   tabSignIn.classList.remove('active');
   formSignUp.classList.add('active');
   formSignIn.classList.remove('active');
-});
-
-muteBtn.addEventListener('click',()=>{
-  isMuted=!isMuted;
-  muteBtn.textContent=isMuted?'🔇':'🔊';
-  if(isMuted) bgSnd.pause();
-  else bgSnd.play().catch(()=>{});
-});
+};
 </script>
 </body>
 </html>
