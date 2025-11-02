@@ -146,11 +146,9 @@ const formSignIn=document.getElementById('formSignIn');
 const formSignUp=document.getElementById('formSignUp');
 const btnSignIn=document.getElementById('btnSignIn');
 const btnSignUp=document.getElementById('btnSignUp');
+const wrap=document.querySelector('.wrap');
 
-startBtn.onclick=()=>auth.classList.add('show');
-closeX.onclick=()=>auth.classList.remove('show');
-
-// tab switching
+// tab switch
 tabSignIn.onclick=()=>{
   tabSignIn.classList.add('active');
   tabSignUp.classList.remove('active');
@@ -164,7 +162,11 @@ tabSignUp.onclick=()=>{
   formSignIn.classList.remove('active');
 };
 
-// user storing logic
+// open/close popup
+startBtn.onclick=()=>auth.classList.add('show');
+closeX.onclick=()=>auth.classList.remove('show');
+
+// sign up logic
 btnSignUp.onclick=()=>{
   const username=document.getElementById('su-username').value.trim();
   const password=document.getElementById('su-password').value.trim();
@@ -176,7 +178,6 @@ btnSignUp.onclick=()=>{
   }
 
   let users=JSON.parse(localStorage.getItem("users")||"[]");
-
   if(users.find(u=>u.username===username)){
     alert("Username already exists!");
     return;
@@ -187,7 +188,7 @@ btnSignUp.onclick=()=>{
   alert("Account created successfully!");
 };
 
-// login logic
+// sign in logic
 btnSignIn.onclick=()=>{
   const username=document.getElementById('si-username').value.trim();
   const password=document.getElementById('si-password').value.trim();
@@ -196,12 +197,35 @@ btnSignIn.onclick=()=>{
   const found=users.find(u=>u.username===username && u.password===password);
 
   if(found){
-    alert("Welcome back, "+found.username+"!");
-    auth.classList.remove('show');
+    localStorage.setItem("loggedInUser",found.username);
+    showWelcome(found.username);
   } else {
     alert("Invalid username or password!");
   }
 };
+
+// check if already logged in
+window.onload=()=>{
+  const user=localStorage.getItem("loggedInUser");
+  if(user){ showWelcome(user); }
+};
+
+// show welcome screen
+function showWelcome(username){
+  auth.classList.remove('show');
+  wrap.innerHTML=`
+    <h1>Welcome, ${username}!</h1>
+    <p>You are now logged in to CraftHive.</p>
+    <button id="logoutBtn" class="main">LOG OUT</button>
+  `;
+  document.getElementById('logoutBtn').onclick=logout;
+}
+
+// logout
+function logout(){
+  localStorage.removeItem("loggedInUser");
+  location.reload();
+}
 </script>
 </body>
 </html>
