@@ -106,10 +106,13 @@
   </div>
 
   <!-- Sign Up Popup -->
-  <div id="signupPopup" class="popup">
-    <div class="popup-content">
-      <span class="close" onclick="closePopup('signupPopup')">&times;</span>
-      <h2>Sign Up</h2>
+<div id="signupPopup" class="popup">
+  <div class="popup-content">
+    <span class="close" onclick="closePopup('signupPopup')">&times;</span>
+    <h2>Sign Up</h2>
+
+    <!-- Added form wrapper -->
+    <form id="signupForm" onsubmit="completeSignup(); return false;">
       <input type="text" id="signupUsername" placeholder="Username" required>
       <input type="email" id="signupEmail" placeholder="Email" required>
       <button type="button" id="sendCodeBtn" onclick="sendVerificationCode()">Send Verification Code</button>
@@ -117,9 +120,11 @@
       <input type="password" id="signupPassword" placeholder="Password" style="display:none;">
       <input type="password" id="confirmPassword" placeholder="Confirm Password" style="display:none;">
       <button type="submit" id="signupBtn" style="display:none;">Sign Up</button>
-      <p>Already a user? <a href="#" onclick="switchPopup('signupPopup','signinPopup')">Sign In</a></p>
-    </div>
+    </form>
+
+    <p>Already a user? <a href="#" onclick="switchPopup('signupPopup','signinPopup')">Sign In</a></p>
   </div>
+</div>
 
   <script>
     function openPopup(id){document.getElementById(id).style.display="flex";}
@@ -169,6 +174,18 @@
     (function(){
       emailjs.init("9TQ4B7r0yFmwzWEEj"); // 🔹 Replace with your EmailJS Public Key
     })();
+    function completeSignup() {
+  const password = document.getElementById("signupPassword").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+
+  if (password !== confirmPassword) {
+    alert("Passwords do not match!");
+    return;
+  }
+
+  alert("🎉 Account created successfully! You can now sign in.");
+  closePopup('signupPopup');
+    }
   </script>
 </body>
   </html>
