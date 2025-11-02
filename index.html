@@ -4,167 +4,180 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Crafthive</title>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
+@import url('https://fonts.cdnfonts.com/css/minecraft-4');
+* {margin:0;padding:0;box-sizing:border-box;font-family:'Minecraft',sans-serif;}
 body {
-  margin: 0;
-  font-family: 'Press Start 2P', cursive;
-  background: url('https://i.postimg.cc/RNDz8BC1/bg.jpg') no-repeat center center/cover;
-  height: 100vh;
-  color: #00ff00;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  overflow: hidden;
+  background:url('https://i.postimg.cc/RNDz8BC1/bg.jpg') no-repeat center center/cover;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  text-shadow:2px 2px 0 #000;
 }
 h1 {
-  font-size: 20px;
-  text-shadow: 2px 2px 0 #000;
-  margin-top: 20px;
+  font-size:60px;
+  color:#00ff80;
+  text-align:center;
+  margin-bottom:10px;
 }
-h2 {
-  font-size: 14px;
-  margin: 15px 0;
-  text-shadow: 2px 2px 0 #000;
+p {
+  font-size:18px;
+  color:#ddd;
+  text-align:center;
+  margin-bottom:40px;
 }
 button {
-  background: #00ff00;
-  border: none;
-  padding: 12px 25px;
-  font-family: 'Press Start 2P', cursive;
-  cursor: pointer;
-  border-radius: 6px;
-  margin-top: 15px;
-  transition: 0.2s;
+  background:#00ff80;
+  color:black;
+  font-size:18px;
+  padding:12px 25px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  transition:all 0.2s;
 }
 button:hover {
-  background: #0f0;
-  transform: scale(1.05);
+  background:#00cc66;
+  transform:scale(1.05);
 }
+
+/* Modal background */
 .modal {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.9);
-  border: 3px solid #00ff00;
-  padding: 30px;
-  border-radius: 10px;
-  text-align: center;
-  width: 90%;
-  max-width: 350px;
-  color: white;
-  box-shadow: 0 0 25px #00ff00;
+  position:fixed;
+  top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.8);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:10;
 }
-.tab-container {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
+
+/* Modal box */
+.modal-content {
+  background:#000;
+  border:2px solid #00ff80;
+  padding:30px;
+  border-radius:20px;
+  width:320px;
+  box-shadow:0 0 20px #00ff80;
+  position:relative;
 }
-.tab {
-  width: 48%;
-  padding: 12px 4px;
-  cursor: pointer;
-  background: #222;
-  color: #00ff00;
-  border: 2px solid #00ff00;
-  font-size: 10px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.tab.active {
-  background: #00ff00;
-  color: #000;
-}
-form {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-}
-form.active {
-  display: flex;
-}
-input {
-  margin: 8px 0;
-  padding: 8px;
-  width: 80%;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 10px;
-  border: 2px solid #00ff00;
-  border-radius: 4px;
-  background: #111;
-  color: #0f0;
-}
+
+/* Cross mark */
 .close {
-  background: #f00;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  cursor: pointer;
-  margin-top: 10px;
-  font-family: 'Press Start 2P', cursive;
+  position:absolute;
+  top:10px;
+  right:15px;
+  font-size:24px;
+  color:#00ff80;
+  cursor:pointer;
 }
-.close:hover {
-  background: #c00;
+
+/* Tabs */
+.tab {
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:20px;
+}
+.tab button {
+  flex:1;
+  margin:2px;
+  background:none;
+  color:#00ff80;
+  border:2px solid #00ff80;
+  border-radius:5px;
+  font-size:14px;
+}
+.tab button.active {
+  background:#00ff80;
+  color:black;
+}
+
+/* Inputs */
+input {
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  background:black;
+  border:2px solid #00ff80;
+  border-radius:5px;
+  color:#00ff80;
+}
+input::placeholder {color:#00ff80;}
+
+.modal-content button.submit {
+  width:100%;
+  background:#00ff80;
+  color:black;
+  padding:12px;
+  border:none;
+  border-radius:5px;
+  margin-top:10px;
+  font-size:16px;
+}
+.modal-content button.submit:hover {
+  background:#00cc66;
 }
 </style>
 </head>
 <body>
-<h1>Crafthive</h1>
-<h2>Welcome to Crafthive</h2>
-<button id="getStarted">Get Started</button>
+  <h1>CRAFT HIVE</h1>
+  <p>Welcome to the world of blocks and creativity — start your journey today!</p>
+  <button id="getStartedBtn">Get Started</button>
 
-<div id="modal" class="modal">
-  <div class="tab-container">
-    <div id="signinTab" class="tab active">Sign In</div>
-    <div id="signupTab" class="tab">Sign Up</div>
+  <!-- Modal -->
+  <div class="modal" id="authModal">
+    <div class="modal-content">
+      <span class="close" id="closeBtn">&times;</span>
+      <h2 style="text-align:center;color:#00ff80;">Welcome!</h2>
+      <div class="tab">
+        <button id="signInTab" class="active">Sign In</button>
+        <button id="signUpTab">Sign Up</button>
+      </div>
+
+      <div id="signInForm">
+        <input type="text" placeholder="Username or Email">
+        <input type="password" placeholder="Password">
+        <button class="submit">Sign In</button>
+      </div>
+
+      <div id="signUpForm" style="display:none;">
+        <input type="text" placeholder="Name">
+        <input type="email" placeholder="Email">
+        <input type="password" placeholder="Password">
+        <button class="submit">Sign Up</button>
+      </div>
+    </div>
   </div>
 
-  <form id="signinForm" class="active">
-    <input type="text" placeholder="Username" required>
-    <input type="password" placeholder="Password" required>
-    <button type="submit">Sign In</button>
-  </form>
-
-  <form id="signupForm">
-    <input type="text" placeholder="Username" required>
-    <input type="email" placeholder="Email" required>
-    <input type="password" placeholder="Password" required>
-    <button type="submit">Sign Up</button>
-  </form>
-
-  <button class="close">Close</button>
-</div>
-
 <script>
-const getStarted = document.getElementById('getStarted');
-const modal = document.getElementById('modal');
-const closeBtn = document.querySelector('.close');
-const signinTab = document.getElementById('signinTab');
-const signupTab = document.getElementById('signupTab');
-const signinForm = document.getElementById('signinForm');
-const signupForm = document.getElementById('signupForm');
+const modal = document.getElementById('authModal');
+const openBtn = document.getElementById('getStartedBtn');
+const closeBtn = document.getElementById('closeBtn');
+const signInTab = document.getElementById('signInTab');
+const signUpTab = document.getElementById('signUpTab');
+const signInForm = document.getElementById('signInForm');
+const signUpForm = document.getElementById('signUpForm');
 
-getStarted.onclick = () => modal.style.display = 'block';
+openBtn.onclick = () => modal.style.display = 'flex';
 closeBtn.onclick = () => modal.style.display = 'none';
+window.onclick = e => { if(e.target == modal) modal.style.display='none'; }
 
-signinTab.onclick = () => {
-  signinTab.classList.add('active');
-  signupTab.classList.remove('active');
-  signinForm.classList.add('active');
-  signupForm.classList.remove('active');
-};
-
-signupTab.onclick = () => {
-  signupTab.classList.add('active');
-  signinTab.classList.remove('active');
-  signupForm.classList.add('active');
-  signinForm.classList.remove('active');
-};
+signInTab.onclick = () => {
+  signInForm.style.display = 'block';
+  signUpForm.style.display = 'none';
+  signInTab.classList.add('active');
+  signUpTab.classList.remove('active');
+}
+signUpTab.onclick = () => {
+  signUpForm.style.display = 'block';
+  signInForm.style.display = 'none';
+  signUpTab.classList.add('active');
+  signInTab.classList.remove('active');
+}
 </script>
 </body>
 </html>
