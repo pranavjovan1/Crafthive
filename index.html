@@ -196,14 +196,68 @@
 }
 
 function showWelcome(username) {
-  const body = document.body;
-  body.innerHTML = `
-    <h1>⚒️CraftHive⚒️</h1>
-    <p>Welcome, ${username}! You’re logged in.</p>
-    <button id="logoutBtn">Logout</button>
+  // Clear popups if any open
+  document.body.innerHTML = `
+    <div id="dashboard">
+      <h1>⚒️CraftHive⚒️</h1>
+      <p>Welcome, <span style="color:#00ff00">${username}</span>!</p>
+
+      <div id="menu">
+        <button class="menu-btn" onclick="joinServer()">Join Server</button>
+        <button class="menu-btn" onclick="openProfile()">Profile</button>
+        <button class="menu-btn" onclick="openSettings()">Settings</button>
+        <button class="menu-btn" id="logoutBtn">Logout</button>
+      </div>
+    </div>
   `;
+
+  // Keep same background and font style
+  document.body.style.background = "url('https://i.ibb.co/fY3jgGHJ/minecraft-java-and-bedrock-edition.jpg') no-repeat center center fixed";
+  document.body.style.backgroundSize = "cover";
+  document.body.style.fontFamily = "'Press Start 2P', cursive";
+  document.body.style.color = "white";
+  document.body.style.textAlign = "center";
+  document.body.style.paddingTop = "80px";
+
+  // Style menu buttons
+  const style = document.createElement('style');
+  style.innerHTML = `
+    .menu-btn {
+      background-color: #00ff00;
+      border: 2px solid #00ff00;
+      color: #000;
+      padding: 10px 20px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 10px;
+      border-radius: 8px;
+      margin: 10px;
+      cursor: pointer;
+      text-shadow: 2px 2px 4px #000;
+      box-shadow: 3px 3px 6px #000;
+      transition: 0.2s;
+    }
+    .menu-btn:hover {
+      background-color: #00cc00;
+      transform: scale(1.05);
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Hook logout button
   document.getElementById("logoutBtn").addEventListener("click", logoutUser);
 }
+
+function joinServer() {
+  alert("🕹️ Coming Soon: Connect to CraftHive Minecraft Server!");
+}
+
+function openProfile() {
+  alert("👤 Profile section coming soon!");
+}
+
+function openSettings() {
+  alert("⚙️ Settings section coming soon!");
+    }
 
 function logoutUser() {
   localStorage.removeItem("isLoggedIn");
