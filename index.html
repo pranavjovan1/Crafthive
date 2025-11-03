@@ -227,7 +227,26 @@
 
   document.getElementById("logoutBtn").addEventListener("click", logoutUser);
 }
+// === Temporary verification + reveal password fields ===
+let generatedCode = "";
 
+function sendVerificationCode() {
+  const email = document.getElementById("signupEmail").value.trim();
+  if (!email) {
+    alert("📧 Please enter your email first!");
+    return;
+  }
+
+  // Generate a random 6-digit code
+  generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
+  alert(`✅ Verification code sent to ${email}\n(For testing, code: ${generatedCode})`);
+
+  // Reveal the hidden fields
+  document.getElementById("verificationCode").style.display = "block";
+  document.getElementById("signupPassword").style.display = "block";
+  document.getElementById("confirmPassword").style.display = "block";
+  document.getElementById("signupBtn").style.display = "block";
+    }
 // === Temporary verification + reveal password fields ===
 function sendVerificationCode() { ... }
 
@@ -241,19 +260,18 @@ async function completeSignup(event) { ... }
   function joinServer() { alert("🕹️ Coming Soon..."); }
   function openProfile() { alert("👤 Profile coming soon!"); }
   function openSettings() { alert("⚙️ Settings coming soon!"); }
-</script>
+<!-- ✅ Dashboard Button Actions -->
+<script>
 function joinServer() {
   alert("🕹️ Coming Soon: Connect to CraftHive Minecraft Server!");
 }
-
 function openProfile() {
   alert("👤 Profile section coming soon!");
 }
-
 function openSettings() {
   alert("⚙️ Settings section coming soon!");
-    }
-  </script>
+}
+</script>
 
   <!-- ✅ Fixed: popup functions moved here -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
