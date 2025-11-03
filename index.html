@@ -124,6 +124,7 @@
   </div>
 
   <!-- Firebase & other scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
@@ -253,7 +254,7 @@ function sendVerificationCode() {
 
 <!-- Your normal popup or dashboard functions stay below -->
 
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  
 <script>
 function openPopup(id){ 
   document.getElementById(id).style.display = "flex"; 
