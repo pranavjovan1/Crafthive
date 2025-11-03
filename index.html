@@ -110,7 +110,7 @@
     <div class="popup-content">
       <span class="close" onclick="closePopup('signupPopup')">&times;</span>
       <h2>Sign Up</h2>
-     <form id="signinForm" onsubmit="return loginUser(event);">
+     <form id="signupForm" onsubmit="return completeSignup(event);">
         <input type="text" id="signupUsername" placeholder="Username" required>
         <input type="email" id="signupEmail" placeholder="Email" required>
         <button type="button" id="sendCodeBtn" onclick="sendVerificationCode()">Send Verification Code</button>
@@ -140,7 +140,8 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    async function completeSignup() {
+    async function completeSignup(event) {
+  if (event) event.preventDefault();
       const email = document.getElementById("signupEmail").value.trim();
       const password = document.getElementById("signupPassword").value;
       const username = document.getElementById("signupUsername").value.trim();
