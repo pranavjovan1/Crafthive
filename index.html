@@ -125,147 +125,101 @@
 
   <!-- Firebase & other scripts -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+  <!-- Firebase (compat) + Auth (compat) — no ES module imports, works on GitHub Pages -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyDi2Gc1oJeBJBakMH1rbFOCkENf7pzDYsM",
-      authDomain: "crafthive-auth.firebaseapp.com",
-      projectId: "crafthive-auth",
-      storageBucket: "crafthive-auth.appspot.com",
-      messagingSenderId: "890742719601",
-      appId: "1:890742719601:web:f67eb41a8ce1015fc947d0"
-    };
+<script>
+  // Firebase config (your values)
+  const firebaseConfig = {
+    apiKey: "AIzaSyDi2Gc1oJeBJBakMH1rbFOCkENf7pzDYsM",
+    authDomain: "crafthive-auth.firebaseapp.com",
+    projectId: "crafthive-auth",
+    storageBucket: "crafthive-auth.appspot.com",
+    messagingSenderId: "890742719601",
+    appId: "1:890742719601:web:f67eb41a8ce1015fc947d0"
+  };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+  // Initialize Firebase (compat)
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
 
-    async function completeSignup(event) {
-  if (event) event.preventDefault();
-      const email = document.getElementById("signupEmail").value.trim();
-      const password = document.getElementById("signupPassword").value;
-      const username = document.getElementById("signupUsername").value.trim();
-
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-        alert(`🎉 Account created for ${username}`);
-        showWelcome(username);
-      } catch (error) {
-        alert("❌ Signup failed: " + error.message);
-      }
+  // Signup — attach to window so HTML can call it
+  window.completeSignup = async function(event){
+    if (event) event.preventDefault();
+    const email = document.getElementById("signupEmail").value.trim();
+    const password = document.getElementById("signupPassword").value;
+    const username = document.getElementById("signupUsername").value.trim();
+    try {
+      await auth.createUserWithEmailAndPassword(email, password);
+      alert(`🎉 Account created for ${username}`);
+      // showWelcome may replace body — call it if exists
+      if (typeof showWelcome === "function") showWelcome(username);
+    } catch (err) {
+      alert("❌ Signup failed: " + err.message);
     }
+  };
 
-    async function loginUser(event) {
-  if (event) event.preventDefault(); // stop default submit
-  const email = document.getElementById("signinEmail").value.trim();
-  const password = document.getElementById("signinPassword").value;
-
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    alert("✅ Login successful!");
-    showWelcome(user.email || email);
-  } catch (error) {
-    alert("❌ Login failed: " + error.message);
-  }
-  return false; // extra safety
+  // Sign in
+  window.loginUser = async function(event){
+    if (event) event.preventDefault();
+    const email = document.getElementById("signinEmail").value.trim();
+    const password = document.getElementById("signinPassword").value;
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      alert("✅ Login successful!");
+      if (typeof showWelcome === "function") showWelcome(email);
+    } catch (err) {
+      alert("❌ Login failed: " + err.message);
     }
+    return false;
+  };
 
-    async function logoutUser() {
-      await signOut(auth);
+  // Logout
+  window.logoutUser = async function(){
+    try {
+      await auth.signOut();
       alert("👋 Logged out successfully!");
       location.reload();
+    } catch (err) {
+      alert("❌ Logout failed: " + err.message);
     }
+  };
 
-    function showWelcome(username) {
-  document.body.innerHTML = `
-    <div id="dashboard">
-      <h1>⚒️CraftHive⚒️</h1>
-      <p>Welcome, <span style="color:#00ff00">${username}</span>!</p>
+  // Temporary verification function used by Send Verification Code button
+  window.sendVerificationCode = function(){
+    const email = document.getElementById("signupEmail").value.trim();
+    if (!email) { alert("📧 Please enter your email first!"); return; }
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    // store globally so completeSignup (if later updated) can check it
+    window.__generatedCode = code;
+    alert(`✅ Verification code sent to ${email}\n(For testing: ${code})`);
+    document.getElementById("verificationCode").style.display = "block";
+    document.getElementById("signupPassword").style.display = "block";
+    document.getElementById("confirmPassword").style.display = "block";
+    document.getElementById("signupBtn").style.display = "block";
+  };
 
-      <div id="menu">
-        <button class="menu-btn" onclick="joinServer()">Join Server</button>
-        <button class="menu-btn" onclick="openProfile()">Profile</button>
-        <button class="menu-btn" onclick="openSettings()">Settings</button>
-        <button class="menu-btn" id="logoutBtn">Logout</button>
-      </div>
-    </div>
-  `;
+  
 
-  // keep background and styling
-  document.body.style.background = "url('https://i.ibb.co/fY3jgGHJ/minecraft-java-and-bedrock-edition.jpg') no-repeat center center fixed";
-  document.body.style.backgroundSize = "cover";
-  document.body.style.fontFamily = "'Press Start 2P', cursive";
-  document.body.style.color = "white";
-  document.body.style.textAlign = "center";
-  document.body.style.paddingTop = "80px";
-
-  // Add button styles
-  const style = document.createElement('style');
-  style.innerHTML = `
-    .menu-btn {
-      background-color: #00ff00;
-      border: 2px solid #00ff00;
-      color: #000;
-      padding: 10px 20px;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 10px;
-      border-radius: 8px;
-      margin: 10px;
-      cursor: pointer;
-      text-shadow: 2px 2px 4px #000;
-      box-shadow: 3px 3px 6px #000;
-      transition: 0.2s;
-    }
-    .menu-btn:hover {
-      background-color: #00cc00;
-      transform: scale(1.05);
-    }
-  `;
-  document.head.appendChild(style);
-
-  document.getElementById("logoutBtn").addEventListener("click", logoutUser);
-}
-// === Temporary verification + reveal password fields ===
-let generatedCode = "";
-
-function sendVerificationCode() {
-  const email = document.getElementById("signupEmail").value.trim();
-  if (!email) {
-    alert("📧 Please enter your email first!");
-    return;
-  }
-
-  // Generate a random 6-digit code
-  generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
-  alert(`✅ Verification code sent to ${email}\n(For testing, code: ${generatedCode})`);
-
-  // Reveal the hidden fields
-  document.getElementById("verificationCode").style.display = "block";
-  document.getElementById("signupPassword").style.display = "block";
-  document.getElementById("confirmPassword").style.display = "block";
-  document.getElementById("signupBtn").style.display = "block";
-    }
-
-
-</script>  <!-- closes the module script -->
+</script>
 
 <!-- Your normal popup or dashboard functions stay below -->
 
   
 <script>
-function openPopup(id){ 
-  document.getElementById(id).style.display = "flex"; 
-}
-function closePopup(id){ 
-  document.getElementById(id).style.display = "none"; 
-}
-function switchPopup(hideId, showId){ 
-  closePopup(hideId); 
-  openPopup(showId); 
-}
+window.addEventListener("DOMContentLoaded", function() {
+  window.openPopup = function(id) {
+    document.getElementById(id).style.display = "flex";
+  };
+  window.closePopup = function(id) {
+    document.getElementById(id).style.display = "none";
+  };
+  window.switchPopup = function(hideId, showId) {
+    window.closePopup(hideId);
+    window.openPopup(showId);
+  };
+});
 </script>
 </body>
 </html>
