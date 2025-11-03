@@ -156,17 +156,19 @@
     }
 
     async function loginUser() {
-      const email = document.getElementById("signinUsername").value.trim();
-      const password = document.getElementById("signinPassword").value;
-      try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-        alert("✅ Login successful!");
-        showWelcome(user.email);
-      } catch (error) {
-        alert("❌ Login failed: " + error.message);
-      }
-      return false;
+  const email = document.getElementById("signinEmail").value.trim();
+  const password = document.getElementById("signinPassword").value;
+
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    alert("✅ Login successful!");
+    showWelcome(user.email || user.displayName || email);
+  } catch (error) {
+    alert("❌ Login failed: " + error.message);
+  }
+
+  return false;
     }
 
     async function logoutUser() {
