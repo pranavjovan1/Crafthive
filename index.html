@@ -155,7 +155,8 @@
       }
     }
 
-    async function loginUser() {
+    async function loginUser(event) {
+  if (event) event.preventDefault(); // stop default submit
   const email = document.getElementById("signinEmail").value.trim();
   const password = document.getElementById("signinPassword").value;
 
@@ -163,12 +164,11 @@
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     alert("✅ Login successful!");
-    showWelcome(user.email || user.displayName || email);
+    showWelcome(user.email || email);
   } catch (error) {
     alert("❌ Login failed: " + error.message);
   }
-
-  return false;
+  return false; // extra safety
     }
 
     async function logoutUser() {
