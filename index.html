@@ -247,31 +247,11 @@ function sendVerificationCode() {
   document.getElementById("confirmPassword").style.display = "block";
   document.getElementById("signupBtn").style.display = "block";
     }
-// === Temporary verification + reveal password fields ===
-function sendVerificationCode() { ... }
 
-// === Update completeSignup to verify code + passwords ===
-async function completeSignup(event) { ... }
 
 </script>  <!-- closes the module script -->
 
 <!-- Your normal popup or dashboard functions stay below -->
-<script>
-  function joinServer() { alert("🕹️ Coming Soon..."); }
-  function openProfile() { alert("👤 Profile coming soon!"); }
-  function openSettings() { alert("⚙️ Settings coming soon!"); }
-<!-- ✅ Dashboard Button Actions -->
-<script>
-function joinServer() {
-  alert("🕹️ Coming Soon: Connect to CraftHive Minecraft Server!");
-}
-function openProfile() {
-  alert("👤 Profile section coming soon!");
-}
-function openSettings() {
-  alert("⚙️ Settings section coming soon!");
-}
-</script>
 
   <!-- ✅ Fixed: popup functions moved here -->
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
@@ -281,7 +261,7 @@ function openSettings() {
     function switchPopup(hideId, showId){ closePopup(hideId); openPopup(showId); }
 
     (function(){
-      emailjs.init("YOUR_PUBLIC_KEY");
+      emailjs.init("9TQ4B7r0yFmwzWEEj");
     })();
   </script>
 </body>
