@@ -110,7 +110,7 @@
     <div class="popup-content">
       <span class="close" onclick="closePopup('signupPopup')">&times;</span>
       <h2>Sign Up</h2>
-      <form id="signupForm" onsubmit="completeSignup(); return false;">
+     <form id="signinForm" onsubmit="return loginUser(event);">
         <input type="text" id="signupUsername" placeholder="Username" required>
         <input type="email" id="signupEmail" placeholder="Email" required>
         <button type="button" id="sendCodeBtn" onclick="sendVerificationCode()">Send Verification Code</button>
@@ -129,12 +129,12 @@
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      apiKey: "AIzaSyDi2Gc1oJeBJBakMH1rbFOCkENf7pzDYsM",
+      authDomain: "crafthive-auth.firebaseapp.com",
+      projectId: "crafthive-auth",
+      storageBucket: "crafthive-auth.appspot.com",
+      messagingSenderId: "890742719601",
+      appId: "1:890742719601:web:f67eb41a8ce1015fc947d0"
     };
 
     const app = initializeApp(firebaseConfig);
