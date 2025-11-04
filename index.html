@@ -185,21 +185,48 @@
       alert("❌ Logout failed: " + err.message);
     }
   };
+  
+  // Real verification code using Brevo (Web3Forms)
+window.sendVerificationCode = async function() {
+  const email = document.getElementById("signupEmail").value.trim();
+  if (!email) {
+    alert("📧 Please enter your email first!");
+    return;
+  }
 
-  // Temporary verification function used by Send Verification Code button
-  window.sendVerificationCode = function(){
-    const email = document.getElementById("signupEmail").value.trim();
-    if (!email) { alert("📧 Please enter your email first!"); return; }
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
-    // store globally so completeSignup (if later updated) can check it
-    window.__generatedCode = code;
-    alert(`✅ Verification code sent to ${email}\n(For testing: ${code})`);
-    document.getElementById("verificationCode").style.display = "block";
-    document.getElementById("signupPassword").style.display = "block";
-    document.getElementById("confirmPassword").style.display = "block";
-    document.getElementById("signupBtn").style.display = "block";
-  };
+  const code = Math.floor(100000 + Math.random() * 900000).toString();
+  window.__generatedCode = code;
 
+  // your Web3Forms access key
+  const accessKey = "35734d25-db26-49ae-8474-9f6944bafb25"; // your real key
+
+  try {
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        access_key: accessKey,
+        subject: "CraftHive Verification Code",
+        from_name: "CraftHive",
+        from_email: "noreply@crafthive.com",
+        message: `Your verification code is: ${code}`,
+        reply_to: email
+      })
+    });
+
+    if (response.ok) {
+      alert(`✅ Verification code sent to ${email}`);
+      document.getElementById("verificationCode").style.display = "block";
+      document.getElementById("signupPassword").style.display = "block";
+      document.getElementById("confirmPassword").style.display = "block";
+      document.getElementById("signupBtn").style.display = "block";
+    } else {
+      alert("❌ Failed to send email. Please try again.");
+    }
+  } catch (error) {
+    alert("⚠️ Network error. Please try again.");
+  }
+};
   
 
 </script>
